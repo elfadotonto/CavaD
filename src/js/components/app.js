@@ -1,8 +1,12 @@
 var React = require('react');
+var Home = require('./home.js');
 
 var App = React.createClass({
     render: function() {
-        return <h1>my app</h1>;
+        return <div className="reactAppContainer">
+            <Home />
+            </div>
+        ;
     }
 });
 

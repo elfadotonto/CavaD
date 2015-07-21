@@ -19810,19 +19810,88 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":29}],157:[function(require,module,exports){
 var React = require('react');
+var Home = require('./home.js');
 
 var App = React.createClass({displayName: "App",
     render: function() {
-        return React.createElement("h1", null, "my app");
+        return React.createElement("div", {className: "reactAppContainer"}, 
+            React.createElement(Home, null)
+            )
+        ;
     }
 });
 
 module.exports = App;
 
-},{"react":156}],158:[function(require,module,exports){
-var App = require('./components/app');
+},{"./home.js":159,"react":156}],158:[function(require,module,exports){
 var React = require('react');
 
+var Footer = React.createClass({displayName: "Footer",
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+                "By ", React.createElement("a", {href: "http://www.fredriksvensen.no"}, "www.fredriksvensen.no")
+        ) 
+        ;
+    }
+});
 
-React.render(React.createElement(App, null), document.getElementById('main'));
-},{"./components/app":157,"react":156}]},{},[158]);
+module.exports.Footer = Footer;
+
+var Header = React.createClass({displayName: "Header",
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("h1", null, "CavaD")
+        )
+        ;
+    }
+});
+
+module.exports.Header = Header;
+
+},{"react":156}],159:[function(require,module,exports){
+var React = require('react');
+
+var Home = React.createClass({displayName: "Home",
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("div", null, "Content")
+        )
+        ;
+    }
+});
+
+module.exports = Home;
+
+},{"react":156}],160:[function(require,module,exports){
+var App = require('./components/app');
+var common = require('./components/common.js');
+var React = require('react');
+
+//var app = {
+//    initialize: function() {
+//        document.addEventListener('deviceready', this.onDeviceReady, false);
+//    },
+
+//    onDeviceReady: function() {
+//        console.log("Device ready, will try to render React component!");
+
+
+//        console.log("React should now be loaded");
+//    }
+//};
+
+//app.initialize();
+
+var headerNode = document.getElementById('header');
+var headerComponent = React.createElement(common.Header, null);
+React.render(headerComponent, headerNode);
+
+var mountNode = document.getElementById('main');
+var mountComponent = React.createElement(App, null);
+React.render(mountComponent, mountNode);
+
+var footerNode = document.getElementById('footer');
+var footerComponent = React.createElement(common.Footer, null);
+React.render(footerComponent, footerNode);
+
+},{"./components/app":157,"./components/common.js":158,"react":156}]},{},[160]);
