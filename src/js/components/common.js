@@ -1,23 +1,21 @@
 var React = require('react');
 
-var Footer = React.createClass({
-    render: function() {
-        return <div className="reactComponentContainer">
-                By <a href="http://www.fredriksvensen.no">www.fredriksvensen.no</a>
-        </div > 
-        ;
-    }
-});
-
-module.exports.Footer = Footer;
-
 var Header = React.createClass({
     render: function() {
-        return <div className="reactComponentContainer">
+        return <header className="reactComponentContainer">
             <h1>CavaD</h1>
-        </div>
+        </header>
         ;
     }
 });
 
-module.exports.Header = Header;
+var Footer = React.createClass({
+    render: function() {
+        return <footer className="reactComponentContainer">
+            By <a href="http://www.fredriksvensen.no">www.fredriksvensen.no</a>
+        </footer> 
+        ;
+    }
+});
+
+module.exports = { Footer: Footer, Header: Header };

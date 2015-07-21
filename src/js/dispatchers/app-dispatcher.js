@@ -1,13 +1,13 @@
-var Dispacher = require('flux').Dispacher;
+var Dispatcher = require('flux').Dispatcher;
 var assign = require('react/lib/Object.assign');
 
-var AppDispacher = assign(new Dispacher(), {
+var AppDispatcher = assign(new Dispatcher(), {
     handleViewAction: function(action) {
-        this.dispach({
+        this.dispatch({
             source: 'VIEW_ACTION',
             action: action
         })
     }
 });
 
-module.exports = AppDispacher;
+module.exports = AppDispatcher;
