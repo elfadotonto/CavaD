@@ -20435,35 +20435,58 @@ var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var AppConstants = require('../constants/app-constants.js');
 
 var AppActions = {
-    move: function(item) {
+    move: function(page) {
         AppDispatcher.handleViewAction({
             actionType: AppConstants.MOVE,
-            page: item
+            page: page
         })
+    },
+    registerPerson: function (page, data) {
+        AppDispatcher.handleViewAction({
+            actionType: AppConstants.REG_PERSON,
+            page: page,
+            data: data
+        });
     }
 }
 
 module.exports = AppActions;
 
-},{"../constants/app-constants.js":165,"../dispatchers/app-dispatcher.js":166}],162:[function(require,module,exports){
+},{"../constants/app-constants.js":167,"../dispatchers/app-dispatcher.js":168}],162:[function(require,module,exports){
 var React = require('react');
-var Home = require('./home.js');
-var Common = require('./common.js');
+var Home = require('../components/home.js');
+var Ready = require('../components/ready.js');
+var Person = require('../components/person.js');
+var AppStore = require('../stores/appStore.js');
 
+var getPage = function() {
+    return { page: AppStore.getPage() };
+};
 var App = React.createClass({displayName: "App",
-    render: function() {
-        return React.createElement("div", {className: "reactAppContainer"}, 
-                    React.createElement(Common.Header, null), 
-                    React.createElement(Home, null), 
-                    React.createElement(Common.Footer, null)
-                )
-            ;
+    getInitialState: function() {
+        return getPage();
+    },
+    componentDidMount: function() { AppStore.addChangeListener(this._onChange); }, 
+    componentWillUnmount: function() { AppStore.removeChangeListener(this._onChange); },
+    render: function () {
+        switch (this.state.page) {
+            case 'person':
+                return React.createElement(Person, null); 
+            case 'ready':
+                return React.createElement(Ready, null); 
+            case 'home':
+            default:
+                return React.createElement(Home, null);
         }
+    },
+    _onChange: function() {
+        this.setState(getPage());
+    }
 });
 
 module.exports = App;
 
-},{"./common.js":163,"./home.js":164,"react":160}],163:[function(require,module,exports){
+},{"../components/home.js":164,"../components/person.js":165,"../components/ready.js":166,"../stores/appStore.js":170,"react":160}],163:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -20488,44 +20511,88 @@ module.exports = { Footer: Footer, Header: Header };
 
 },{"react":160}],164:[function(require,module,exports){
 var React = require('react');
-var HomeActions = require('../actions/homeActions.js');
-var HomeStore = require('../stores/homeStore.js');
+var AppActions = require('../actions/appActions.js');
 
-var getPage = function() {
-    return { page: HomeStore.getPage() };
-};
-var Home = React.createClass({displayName: "Home",
-    getInitialState: function() {
-        return getPage();
-    },
-    handleClick: function(to) {
-        HomeActions.move(to);
+var Home = React.createClass({displayName: "Home",    
+    handleClick: function() {
+        AppActions.move('person');
     }, 
-    componentDidMount: function() { HomeStore.addChangeListener(this._onChange); }, 
-    componentWillUnmount: function() { HomeStore.removeChangeListener(this._onChange); },
     render: function() {
         return React.createElement("div", {className: "reactComponentContainer"}, 
-            React.createElement("div", null, " ",  this.state.page, " "), 
+            React.createElement("div", null, " Home page "), 
             React.createElement("div", null, 
-                React.createElement("button", {className: "btn", onClick: this.handleClick('next')}, "Next")
+                React.createElement("button", {className: "btn", onClick: this.handleClick}, " Start ")
             )
         )
         ;
-    },
-    _onChange: function() {
-        this.setState(getPage());
     }
-
 });
 
 module.exports = Home;
 
-},{"../actions/homeActions.js":161,"../stores/homeStore.js":168,"react":160}],165:[function(require,module,exports){
+},{"../actions/appActions.js":161,"react":160}],165:[function(require,module,exports){
+var React = require('react');
+var AppActions = require('../actions/appActions.js');
+
+var Person = React.createClass({displayName: "Person",    
+    handleSubmit: function() {
+        AppActions.registerPerson('ready', {age: 20});
+    }, 
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("div", null, " Personal data "), 
+        React.createElement("form", null, 
+            React.createElement("label", {value: "age"}, "Age"), 
+            React.createElement("input", {type: "number", ref: "age"})
+        ), 
+            React.createElement("div", null, 
+                React.createElement("button", {className: "btn", onClick: this.handleSubmit}, " Submit ")
+            )
+        )
+        ;
+    }
+});
+
+module.exports = Person;
+
+},{"../actions/appActions.js":161,"react":160}],166:[function(require,module,exports){
+var React = require('react');
+var AppActions = require('../actions/appActions.js');
+var PersonStore = require('../stores/personStore.js');
+
+var Ready = React.createClass({displayName: "Ready",  
+    handleCancel: function() {
+        AppActions.move('person');
+    },
+    handleSubmit: function() {
+        AppActions.move('next');
+    },
+    getInitialState: function() {
+        return { data: PersonStore.getPerson() };
+    },
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("div", null, " Personal data overview"), 
+        React.createElement("dl", null, 
+        React.createElement("dt", null, "Age"), React.createElement("dd", null, this.state.data.age)), 
+            React.createElement("div", null, 
+                React.createElement("button", {className: "btn", onClick: this.handleCancel}, " Back "), 
+                React.createElement("button", {className: "btn", onClick: this.handleSubmit}, " Start ")
+            )
+        )
+        ;
+    }
+});
+
+module.exports = Ready;
+
+},{"../actions/appActions.js":161,"../stores/personStore.js":171,"react":160}],167:[function(require,module,exports){
 module.exports = {
-    MOVE: 'MOVE'
+    MOVE: 'MOVE',
+    REG_PERSON: 'REG_PERSON'
 };
 
-},{}],166:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('react/lib/Object.assign');
 
@@ -20540,14 +20607,20 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":3,"react/lib/Object.assign":31}],167:[function(require,module,exports){
-var App = require('./components/app');
+},{"flux":3,"react/lib/Object.assign":31}],169:[function(require,module,exports){
 var React = require('react');
+var App = require('./components/app.js');
+var Common = require('./components/common.js');
 
 var mountNode = document.getElementById('main');
-var mountComponent = React.createElement(App, null);
+var mountComponent = React.createElement("div", {className: "reactAppContainer"}, 
+                    React.createElement(Common.Header, null), 
+                    React.createElement(App, null), 
+                    React.createElement(Common.Footer, null)
+                )
+                ;
 React.render(mountComponent, mountNode);
-},{"./components/app":162,"react":160}],168:[function(require,module,exports){
+},{"./components/app.js":162,"./components/common.js":163,"react":160}],170:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/app-constants.js');
@@ -20555,14 +20628,14 @@ var assign = require('react/lib/Object.assign');
 
 var CHANGE_EVENT = 'change';
 var page = 'home'
-var HomeStore = assign({}, EventEmitter.prototype, {
+var AppStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
         this.emit(CHANGE_EVENT);
     },
     getPage: function () {
-        console.log("get: "+ page); return page; },
+        return page;
+    },
     setPage: function (newPage) {
-        console.log("set: " + newPage);
         page = newPage;
     },
     addChangeListener: function (callback) { this.on(CHANGE_EVENT, callback); },
@@ -20573,9 +20646,40 @@ AppDispatcher.register(function (payload) {
     var action = payload.action;
 
     switch(action.actionType) {
-        case AppConstants.MOVE:
-            HomeStore.setPage(action.page);
-            HomeStore.emitChange();
+        default:
+            AppStore.setPage(action.page);
+            AppStore.emitChange();
+            break;
+    }
+
+    return true;
+});
+
+module.exports = AppStore;
+
+},{"../constants/app-constants.js":167,"../dispatchers/app-dispatcher.js":168,"events":1,"react/lib/Object.assign":31}],171:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+var AppConstants = require('../constants/app-constants.js');
+var AppStore = require('../stores/appStore.js');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+
+var person = {};
+var PersonStore = assign({}, EventEmitter.prototype, {
+    getPerson: function () {
+        return person;
+    },
+    setPerson: function (newPerson) {
+        person = newPerson;
+    }
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    console.log(action);
+    switch(action.actionType) {
+        case AppConstants.REG_PERSON:
+            PersonStore.setPerson(action.data);
             break;
         default:
             break;
@@ -20584,6 +20688,6 @@ AppDispatcher.register(function (payload) {
     return true;
 });
 
-module.exports = HomeStore;
+module.exports = PersonStore;
 
-},{"../constants/app-constants.js":165,"../dispatchers/app-dispatcher.js":166,"events":1,"react/lib/Object.assign":31}]},{},[167]);
+},{"../constants/app-constants.js":167,"../dispatchers/app-dispatcher.js":168,"../stores/appStore.js":170,"events":1,"react/lib/Object.assign":31}]},{},[169]);

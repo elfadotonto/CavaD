@@ -1,3 +1,4 @@
 module.exports = {
-    MOVE: 'MOVE'
+    MOVE: 'MOVE',
+    REG_PERSON: 'REG_PERSON'
 };
