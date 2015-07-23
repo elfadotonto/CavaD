@@ -7,13 +7,6 @@ var AppActions = {
             actionType: AppConstants.MOVE,
             page: page
         })
-    },
-    registerPerson: function (page, data) {
-        AppDispatcher.handleViewAction({
-            actionType: AppConstants.REG_PERSON,
-            page: page,
-            data: data
-        });
     }
 }
 

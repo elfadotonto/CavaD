@@ -1,8 +1,8 @@
 var React = require('react');
+var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
 var Ready = require('../components/ready.js');
 var Person = require('../components/person.js');
-var AppStore = require('../stores/appStore.js');
 
 var getPage = function() {
     return { page: AppStore.getPage() };

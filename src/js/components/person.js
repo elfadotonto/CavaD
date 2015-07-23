@@ -1,22 +1,29 @@
 var React = require('react');
-var AppActions = require('../actions/appActions.js');
+var PersonStore = require('../stores/personStore.js');
+var Personal = require('../components/personal.js');
+var Lifestyle = require('../components/lifestyle.js');
 
-var Person = React.createClass({    
-    handleSubmit: function() {
-        AppActions.registerPerson('ready', {age: 20});
-    }, 
+var getStep = function (){
+    return {step: PersonStore.getStep()};
+};
+
+var Person = React.createClass({
+    getInitialState: function() {
+        return getStep();
+    },
+    componentDidMount: function() { PersonStore.addChangeListener(this._onChange); }, 
+    componentWillUnmount: function() { PersonStore.removeChangeListener(this._onChange); },
     render: function() {
-        return <div className="reactComponentContainer">
-            <div> Personal data </div>
-        <form>
-            <label value="age">Age</label>
-            <input type="number" ref="age" />
-        </form>
-            <div>
-                <button className="btn" onClick={this.handleSubmit}> Submit </button>
-            </div>
-        </div>
-        ;
+        switch(this.state.step){
+            case 'lifestyle':
+                return <Lifestyle />;
+            case 'personal':
+            default:
+                return <Personal /> ;
+        }
+    },
+    _onChange: function() {
+        this.setState(getStep());
     }
 });
 

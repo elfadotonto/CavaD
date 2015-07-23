@@ -14,12 +14,44 @@ var Ready = React.createClass({
     },
     render: function() {
         return <div className="reactComponentContainer">
-            <div> Personal data overview</div>
-        <dl>
-        <dt>Age</dt><dd>{this.state.data.age}</dd></dl>
-            <div>
-                <button className="btn" onClick={this.handleCancel}> Back </button>
-                <button className="btn" onClick={this.handleSubmit}> Start </button>
+            <h3>Personal data overview</h3>
+            <div className="container">
+                <div className="row">
+                    <div className="col-sm-6">
+                        <h4>Personal</h4>
+                        <dl className="dl-horizontal">
+                            <dt>Age</dt>
+                            <dd>{this.state.data.personal.age}</dd>
+                            <dt>Gender</dt>
+                            <dd>{this.state.data.personal.gender}</dd>
+                            <dt>Weight</dt>
+                            <dd>{this.state.data.personal.weight}</dd>
+                            <dt>Height</dt>
+                            <dd>{this.state.data.personal.height}</dd>
+                            <dt>BMI</dt>
+                            <dd>{this.state.data.BMI}</dd>
+                        </dl>
+                    </div>
+                    <div className="col-sm-6">
+                        <h4>Lifestyle</h4>
+                        <dl className="dl-horizontal">
+                            <dt>Smoking</dt>
+                            <dd>{this.state.data.lifestyle.smoking}</dd>
+                            <dt>Diet</dt>
+                            <dd>{this.state.data.lifestyle.diet}</dd>
+                            <dt>Exercise</dt>
+                            <dd>{this.state.data.lifestyle.exercise}</dd>
+                            <dt>Diabetes</dt>
+                            <dd>{this.state.data.lifestyle.diabetes}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-12">
+                        <button className="btn" onClick={this.handleCancel}> Back </button>
+                        <button className="btn" onClick={this.handleSubmit}> Start </button>
+                    </div>
+                </div>
             </div>
         </div>
         ;

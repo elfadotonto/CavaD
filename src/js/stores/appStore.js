@@ -5,6 +5,7 @@ var assign = require('react/lib/Object.assign');
 
 var CHANGE_EVENT = 'change';
 var page = 'home'
+
 var AppStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -22,10 +23,12 @@ var AppStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (payload) {
     var action = payload.action;
 
-    switch(action.actionType) {
-        default:
+    switch (action.actionType) {
+        case AppConstants.MOVE:
             AppStore.setPage(action.page);
             AppStore.emitChange();
+            break;
+        default:
             break;
     }
 
