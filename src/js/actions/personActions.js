@@ -15,9 +15,16 @@ var AppActions = {
             data: data
         });
     },
-    registerLifeStyle: function (page, data) {
+    registerLifeStyle: function (step, data) {
         AppDispatcher.handleViewAction({
             actionType: PersonConstants.REG_LIFESTYLE,
+            step: step,
+            data: data
+        });
+    },
+    registerMedical: function (page, data) {
+        AppDispatcher.handleViewAction({
+            actionType: PersonConstants.REG_MEDICAL,
             page: page,
             data: data
         });

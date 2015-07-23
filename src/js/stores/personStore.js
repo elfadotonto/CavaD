@@ -53,6 +53,11 @@ AppDispatcher.register(function (payload) {
             break;
         case PersonConstants.REG_LIFESTYLE:
             PersonStore.setPerson(action.data);
+            PersonStore.setStep(action.step);
+            PersonStore.emitChange();
+            break;
+        case PersonConstants.REG_MEDICAL:
+            PersonStore.setPerson(action.data);
             AppStore.setPage(action.page);
             AppStore.emitChange();
             break;

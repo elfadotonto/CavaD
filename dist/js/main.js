@@ -22500,7 +22500,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/app-constants.js":188,"../dispatchers/app-dispatcher.js":190}],180:[function(require,module,exports){
+},{"../constants/app-constants.js":189,"../dispatchers/app-dispatcher.js":191}],180:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 
@@ -22518,9 +22518,16 @@ var AppActions = {
             data: data
         });
     },
-    registerLifeStyle: function (page, data) {
+    registerLifeStyle: function (step, data) {
         AppDispatcher.handleViewAction({
             actionType: PersonConstants.REG_LIFESTYLE,
+            step: step,
+            data: data
+        });
+    },
+    registerMedical: function (page, data) {
+        AppDispatcher.handleViewAction({
+            actionType: PersonConstants.REG_MEDICAL,
             page: page,
             data: data
         });
@@ -22529,7 +22536,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/person-constants.js":189,"../dispatchers/app-dispatcher.js":190}],181:[function(require,module,exports){
+},{"../constants/person-constants.js":190,"../dispatchers/app-dispatcher.js":191}],181:[function(require,module,exports){
 var React = require('react');
 var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
@@ -22563,7 +22570,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../components/home.js":183,"../components/person.js":185,"../components/ready.js":187,"../stores/appStore.js":192,"react":178}],182:[function(require,module,exports){
+},{"../components/home.js":183,"../components/person.js":186,"../components/ready.js":188,"../stores/appStore.js":193,"react":178}],182:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -22615,7 +22622,7 @@ var PersonStore = require('../stores/personStore.js');
 var Personal = React.createClass({displayName: "Personal",
     mixins: [React.addons.LinkedStateMixin],
     handleStep: function() {
-        PersonActions.registerLifeStyle('ready', {
+        PersonActions.registerLifeStyle('medical', {
             smoking: this.state.smoking,
             diet: this.state.diet,
             exercise: this.state.exercise,
@@ -22682,11 +22689,93 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../actions/personActions.js":180,"../stores/personStore.js":193,"react/addons":6}],185:[function(require,module,exports){
+},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],185:[function(require,module,exports){
+var React = require('react/addons');
+var PersonActions = require('../actions/personActions.js');
+var PersonStore = require('../stores/personStore.js');
+
+var Personal = React.createClass({displayName: "Personal",
+    mixins: [React.addons.LinkedStateMixin],
+    handleStep: function() {
+        PersonActions.registerMedical('ready', {
+            ldl: this.state.ldl,
+            hdl: this.state.hdl,
+            bpSys: this.state.bpSys,
+            bpDia: this.state.bpDia,
+            colMeds: this.state.colMeds,
+            bpMeds: this.state.colMeds
+        });
+    }, 
+    handleBack: function(){
+        PersonActions.back('lifestyle');
+    },
+    getInitialState: function() {
+        return {ldl: 3, 
+            hdl: 5,
+            bpSys: 80,
+            bpDia: 50,
+            colMeds: 'No',
+            btMeds: 'No'};
+    },   
+    componentDidMount: function() {
+        var person = PersonStore.getPerson();
+        if(person.medical){
+            this.setState( person.medical);
+        }
+    }, 
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("h5", null, "Medical information"), 
+            React.createElement("form", {className: "form-horizontal"}, 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "LDL"), 
+                    React.createElement("input", {type: "number", className: "form-control", valueLink: this.linkState('ldl')})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "HDL"), 
+                    React.createElement("input", {type: "number", className: "form-control", valueLink: this.linkState('hdl')})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "Colesterol medication"), 
+                    React.createElement("select", {className: "form-control", valueLink: this.linkState('colMeds')}, 
+                        React.createElement("option", {value: "No"}, "No"), 
+                        React.createElement("option", {value: "Yes"}, "Yes")
+                    )
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "BP systolic"), 
+                    React.createElement("input", {type: "number", className: "form-control", valueLink: this.linkState('bpSys')})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "BP diastolic"), 
+                    React.createElement("input", {type: "number", className: "form-control", valueLink: this.linkState('bpDia')})
+                ), 
+                React.createElement("div", {className: "form-group"}, 
+                    React.createElement("label", null, "Bloodpressure medication"), 
+                    React.createElement("select", {className: "form-control", valueLink: this.linkState('bpMeds')}, 
+                        React.createElement("option", {value: "No"}, "No"), 
+                        React.createElement("option", {value: "Yes"}, "Yes")
+                    )
+                )
+            ), 
+            React.createElement("div", null, 
+                React.createElement("button", {className: "btn", onClick: this.handleBack}, " Back "), 
+                React.createElement("button", {className: "btn", onClick: this.handleStep}, " Next ")
+            )
+        )
+        ;
+    }
+    
+});
+
+module.exports = Personal;
+
+},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],186:[function(require,module,exports){
 var React = require('react');
 var PersonStore = require('../stores/personStore.js');
 var Personal = require('../components/personal.js');
 var Lifestyle = require('../components/lifestyle.js');
+var Medical = require('../components/medical.js');
 
 var getStep = function (){
     return {step: PersonStore.getStep()};
@@ -22702,6 +22791,8 @@ var Person = React.createClass({displayName: "Person",
         switch(this.state.step){
             case 'lifestyle':
                 return React.createElement(Lifestyle, null);
+            case 'medical':
+                return React.createElement(Medical, null);
             case 'personal':
             default:
                 return React.createElement(Personal, null) ;
@@ -22714,7 +22805,7 @@ var Person = React.createClass({displayName: "Person",
 
 module.exports = Person;
 
-},{"../components/lifestyle.js":184,"../components/personal.js":186,"../stores/personStore.js":193,"react":178}],186:[function(require,module,exports){
+},{"../components/lifestyle.js":184,"../components/medical.js":185,"../components/personal.js":187,"../stores/personStore.js":194,"react":178}],187:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../actions/personActions.js');
 var PersonStore = require('../stores/personStore.js');
@@ -22777,7 +22868,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../actions/personActions.js":180,"../stores/personStore.js":193,"react/addons":6}],187:[function(require,module,exports){
+},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],188:[function(require,module,exports){
 var React = require('react');
 var AppActions = require('../actions/appActions.js');
 var PersonStore = require('../stores/personStore.js');
@@ -22825,6 +22916,24 @@ var Ready = React.createClass({displayName: "Ready",
                             React.createElement("dd", null, this.state.data.lifestyle.diabetes)
                         )
                     )
+                ), React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-sm-6"}, 
+                        React.createElement("h4", null, "Personal"), 
+                        React.createElement("dl", {className: "dl-horizontal"}, 
+                            React.createElement("dt", null, "LDL"), 
+                            React.createElement("dd", null, this.state.data.medical.ldl), 
+                            React.createElement("dt", null, "HDL"), 
+                            React.createElement("dd", null, this.state.data.medical.hdl), 
+                            React.createElement("dt", null, "Colesterol medication"), 
+                            React.createElement("dd", null, this.state.data.medical.colMeds), 
+                            React.createElement("dt", null, "BP systolic"), 
+                            React.createElement("dd", null, this.state.data.medical.bpSys), 
+                            React.createElement("dt", null, "BP diastolic"), 
+                            React.createElement("dd", null, this.state.data.medical.bpDia), 
+                            React.createElement("dt", null, "BP medication"), 
+                            React.createElement("dd", null, this.state.data.medical.bpMeds)
+                        )
+                    )
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("div", {className: "col-sm-12"}, 
@@ -22840,19 +22949,20 @@ var Ready = React.createClass({displayName: "Ready",
 
 module.exports = Ready;
 
-},{"../actions/appActions.js":179,"../stores/personStore.js":193,"react":178}],188:[function(require,module,exports){
+},{"../actions/appActions.js":179,"../stores/personStore.js":194,"react":178}],189:[function(require,module,exports){
 module.exports = {
     MOVE: 'MOVE'
 };
 
-},{}],189:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 module.exports = {
     BACK: 'BACK',
     REG_PERSONAL: 'REG_PERSONAL',
-    REG_LIFESTYLE: 'REG_LIFESTYLE'
+    REG_LIFESTYLE: 'REG_LIFESTYLE',
+    REG_MEDICAL: 'REG_MEDICAL'
 };
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('react/lib/Object.assign');
 
@@ -22867,7 +22977,7 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":3,"react/lib/Object.assign":34}],191:[function(require,module,exports){
+},{"flux":3,"react/lib/Object.assign":34}],192:[function(require,module,exports){
 var React = require('react');
 var App = require('./components/app.js');
 var Common = require('./components/common.js');
@@ -22880,7 +22990,7 @@ var mountComponent = React.createElement("div", {className: "reactAppContainer"}
                 )
                 ;
 React.render(mountComponent, mountNode);
-},{"./components/app.js":181,"./components/common.js":182,"react":178}],192:[function(require,module,exports){
+},{"./components/app.js":181,"./components/common.js":182,"react":178}],193:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/app-constants.js');
@@ -22920,7 +23030,7 @@ AppDispatcher.register(function (payload) {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants.js":188,"../dispatchers/app-dispatcher.js":190,"events":1,"react/lib/Object.assign":34}],193:[function(require,module,exports){
+},{"../constants/app-constants.js":189,"../dispatchers/app-dispatcher.js":191,"events":1,"react/lib/Object.assign":34}],194:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 var AppStore = require('../stores/appStore.js');
@@ -22976,6 +23086,11 @@ AppDispatcher.register(function (payload) {
             break;
         case PersonConstants.REG_LIFESTYLE:
             PersonStore.setPerson(action.data);
+            PersonStore.setStep(action.step);
+            PersonStore.emitChange();
+            break;
+        case PersonConstants.REG_MEDICAL:
+            PersonStore.setPerson(action.data);
             AppStore.setPage(action.page);
             AppStore.emitChange();
             break;
@@ -22988,4 +23103,4 @@ AppDispatcher.register(function (payload) {
 
 module.exports = PersonStore;
 
-},{"../constants/person-constants.js":189,"../dispatchers/app-dispatcher.js":190,"../stores/appStore.js":192,"events":1,"react/lib/Object.assign":34}]},{},[191]);
+},{"../constants/person-constants.js":190,"../dispatchers/app-dispatcher.js":191,"../stores/appStore.js":193,"events":1,"react/lib/Object.assign":34}]},{},[192]);

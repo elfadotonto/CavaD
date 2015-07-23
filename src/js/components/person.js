@@ -2,6 +2,7 @@ var React = require('react');
 var PersonStore = require('../stores/personStore.js');
 var Personal = require('../components/personal.js');
 var Lifestyle = require('../components/lifestyle.js');
+var Medical = require('../components/medical.js');
 
 var getStep = function (){
     return {step: PersonStore.getStep()};
@@ -17,6 +18,8 @@ var Person = React.createClass({
         switch(this.state.step){
             case 'lifestyle':
                 return <Lifestyle />;
+            case 'medical':
+                return <Medical />;
             case 'personal':
             default:
                 return <Personal /> ;

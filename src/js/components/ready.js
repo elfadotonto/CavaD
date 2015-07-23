@@ -45,6 +45,24 @@ var Ready = React.createClass({
                             <dd>{this.state.data.lifestyle.diabetes}</dd>
                         </dl>
                     </div>
+                </div><div className="row">
+                    <div className="col-sm-6">
+                        <h4>Personal</h4>
+                        <dl className="dl-horizontal">
+                            <dt>LDL</dt>
+                            <dd>{this.state.data.medical.ldl}</dd>
+                            <dt>HDL</dt>
+                            <dd>{this.state.data.medical.hdl}</dd>
+                            <dt>Colesterol medication</dt>
+                            <dd>{this.state.data.medical.colMeds}</dd>
+                            <dt>BP systolic</dt>
+                            <dd>{this.state.data.medical.bpSys}</dd>
+                            <dt>BP diastolic</dt>
+                            <dd>{this.state.data.medical.bpDia}</dd>
+                            <dt>BP medication</dt>
+                            <dd>{this.state.data.medical.bpMeds}</dd>
+                        </dl>
+                    </div>
                 </div>
                 <div className="row">
                     <div className="col-sm-12">

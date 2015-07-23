@@ -5,7 +5,7 @@ var PersonStore = require('../stores/personStore.js');
 var Personal = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
     handleStep: function() {
-        PersonActions.registerLifeStyle('ready', {
+        PersonActions.registerLifeStyle('medical', {
             smoking: this.state.smoking,
             diet: this.state.diet,
             exercise: this.state.exercise,
