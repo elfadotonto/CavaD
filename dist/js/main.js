@@ -23267,7 +23267,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-
     switch (action.actionType) {
         case AppConstants.MOVE:
             AppStore.setPage(action.page);
@@ -23340,7 +23339,6 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         } else if (step == 'medical') {
             person.medical.totCol = calculateTotCol();
         }
-        console.log(person)
     },
     getStep: function () {
         return step;
@@ -23417,7 +23415,6 @@ var RiskStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-    console.log(action);
     switch (action.actionType) {
         default:
             break;

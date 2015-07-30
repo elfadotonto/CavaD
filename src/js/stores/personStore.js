@@ -55,7 +55,6 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         } else if (step == 'medical') {
             person.medical.totCol = calculateTotCol();
         }
-        console.log(person)
     },
     getStep: function () {
         return step;

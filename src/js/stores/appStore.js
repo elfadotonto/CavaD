@@ -22,7 +22,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-
     switch (action.actionType) {
         case AppConstants.MOVE:
             AppStore.setPage(action.page);

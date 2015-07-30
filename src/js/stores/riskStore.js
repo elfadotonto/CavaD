@@ -31,7 +31,6 @@ var RiskStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-    console.log(action);
     switch (action.actionType) {
         default:
             break;
