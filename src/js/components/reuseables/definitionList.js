@@ -1,7 +1,6 @@
 var React = require('react');
 
 var toTitleCase = function(str){
-    console.log(str);
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 var getKeys = function(obj){
@@ -17,7 +16,6 @@ var DefinitionList = React.createClass({
                 <DefinitionListItem title={toTitleCase(key)} data={this.state.data[key]} />
             );
         }.bind(this));
-        console.log(items);
         return <div className="col-sm-6">
                     <h4>{toTitleCase(this.props.title)}</h4>
                     <ul className="ul-horizontal definition-list">
