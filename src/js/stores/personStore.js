@@ -15,6 +15,11 @@ var calculateBMI = function () {
     return Math.round(bmi *10)/10;
 };
 
+var calculateTotCol = function () {
+    if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
+    return person.medical.ldl + person.medical.hdl;
+}
+
 var PersonStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -25,10 +30,30 @@ var PersonStore = assign({}, EventEmitter.prototype, {
     getSection: function(section){
         return person[section];
     },
+    getAgeGroup: function () {
+        var a = Math.floor((person.personal.age - 50) / 5) + 1;
+        if (a < 0) a = 0;
+        else if (a > 4) a = 4;
+        return a;
+    },
+    getColGroup: function(){
+        var c = Math.floor(person.medical.totCol - 5) + 1;
+        if (c < 0) c = 0;
+        else if (c > 4) c = 4;
+        return c;
+    },
+    getBpGroup: function(){
+        var s = Math.floor((person.medical.bpSys - 140) / 20) + 1;
+        if (s < 0) s = 0;
+        else if (s > 3) s = 3;
+        return s;
+    },
     setPerson: function (newPersonData) {
         person[step] = newPersonData;
         if (step == 'personal') {
             person.personal.BMI = calculateBMI();
+        } else if (step == 'medical') {
+            person.medical.totCol = calculateTotCol();
         }
         console.log(person)
     },
@@ -44,7 +69,6 @@ var PersonStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-    console.log(action);
     switch (action.actionType) {
         case PersonConstants.BACK:
             PersonStore.setStep(action.step);

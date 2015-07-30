@@ -3,6 +3,7 @@ var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
 var Ready = require('../components/ready.js');
 var Person = require('../components/person.js');
+var Risk = require('../components/risk.js');
 
 var getPage = function() {
     return { page: AppStore.getPage() };
@@ -19,6 +20,8 @@ var App = React.createClass({
                 return <Person />; 
             case 'ready':
                 return <Ready />; 
+            case 'risk':
+                return <Risk />; 
             case 'home':
             default:
                 return <Home />;

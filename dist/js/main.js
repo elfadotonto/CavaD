@@ -22486,6 +22486,213 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":36}],179:[function(require,module,exports){
+module.exports={
+    "female": {
+        "smoke": [
+            {
+                "age": [
+                    {
+                        "col": [
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 0, 0, 1, 1 ] },
+                            { "bp": [ 0, 1, 1, 1 ] },
+                            { "bp": [ 1, 1, 1, 1 ] },
+                            { "bp": [ 1, 1, 1, 2 ] },
+                            { "bp": [ 1, 1, 1, 2 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 1, 1, 1, 2 ] },
+                            { "bp": [ 1, 1, 2, 2 ] },
+                            { "bp": [ 1, 1, 2, 3 ] },
+                            { "bp": [ 1, 1, 2, 3 ] },
+                            { "bp": [ 1, 2, 3, 4 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 1, 2, 3, 4 ] },
+                            { "bp": [ 1, 2, 3, 4 ] },
+                            { "bp": [ 2, 2, 3, 5 ] },
+                            { "bp": [ 2, 3, 4, 6 ] },
+                            { "bp": [ 2, 3, 5, 7 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 2, 3, 5, 7 ] },
+                            { "bp": [ 2, 3, 5, 8 ] },
+                            { "bp": [ 3, 4, 6, 9 ] },
+                            { "bp": [ 3, 5, 7, 10 ] },
+                            { "bp": [ 4, 6, 8, 12 ] }
+                        ]
+                    }
+                ]
+            },
+            {
+                "age": [
+                    {
+                        "col": [
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 0 ] },
+                            { "bp": [ 0, 0, 0, 1 ] },
+                            { "bp": [ 0, 0, 0, 1 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 1, 1, 1, 2 ] },
+                            { "bp": [ 1, 1, 2, 2 ] },
+                            { "bp": [ 1, 1, 2, 3 ] },
+                            { "bp": [ 1, 1, 2, 2 ] },
+                            { "bp": [ 1, 2, 3, 4 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 1, 2, 3, 4 ] },
+                            { "bp": [ 1, 2, 3, 5 ] },
+                            { "bp": [ 2, 2, 4, 5 ] },
+                            { "bp": [ 2, 3, 4, 6 ] },
+                            { "bp": [ 2, 3, 5, 7 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 2, 3, 5, 8 ] },
+                            { "bp": [ 3, 4, 6, 9 ] },
+                            { "bp": [ 3, 5, 7, 10 ] },
+                            { "bp": [ 4, 5, 8, 11 ] },
+                            { "bp": [ 4, 6, 9, 13 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 4, 6, 9, 13 ] },
+                            { "bp": [ 5, 7, 10, 15 ] },
+                            { "bp": [ 5, 8, 12, 17 ] },
+                            { "bp": [ 6, 9, 13, 19 ] },
+                            { "bp": [ 7, 11, 16, 22 ] }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "male": {
+        "smoke": [
+            {
+                "age": [
+                    {
+                        "col": [
+                            { "bp": [ 0, 0, 1, 1 ] },
+                            { "bp": [ 0, 1, 1, 1 ] },
+                            { "bp": [ 1, 1, 1, 1 ] },
+                            { "bp": [ 1, 1, 1, 2 ] },
+                            { "bp": [ 1, 1, 1, 2 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 1, 2, 2, 4 ] },
+                            { "bp": [ 1, 2, 3, 4 ] },
+                            { "bp": [ 2, 2, 3, 5 ] },
+                            { "bp": [ 2, 3, 4, 6 ] },
+                            { "bp": [ 2, 3, 5, 7 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 2, 3, 4, 6 ] },
+                            { "bp": [ 2, 3, 5, 7 ] },
+                            { "bp": [ 3, 4, 6, 8 ] },
+                            { "bp": [ 3, 5, 7, 10 ] },
+                            { "bp": [ 4, 6, 8, 12 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 3, 4, 6, 9 ] },
+                            { "bp": [ 3, 5, 7, 11 ] },
+                            { "bp": [ 4, 6, 9, 13 ] },
+                            { "bp": [ 5, 7, 10, 15 ] },
+                            { "bp": [ 6, 9, 12, 18 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 4, 6, 9, 14 ] },
+                            { "bp": [ 5, 8, 11, 16 ] },
+                            { "bp": [ 6, 9, 13, 19 ] },
+                            { "bp": [ 7, 11, 15, 22 ] },
+                            { "bp": [ 9, 13, 16, 26 ] }
+                        ]
+                    }
+                ]
+            },
+            {
+                "age": [
+                    {
+                        "col": [
+                            { "bp": [ 1, 1, 1, 2 ] },
+                            { "bp": [ 1, 1, 2, 2 ] },
+                            { "bp": [ 1, 1, 2, 3 ] },
+                            { "bp": [ 1, 2, 2, 3 ] },
+                            { "bp": [ 1, 2, 3, 4 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 2, 3, 5, 7 ] },
+                            { "bp": [ 3, 4, 6, 8 ] },
+                            { "bp": [ 3, 5, 7, 10 ] },
+                            { "bp": [ 4, 6, 8, 12 ] },
+                            { "bp": [ 5, 7, 10, 14 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 4, 5, 8, 12 ] },
+                            { "bp": [ 4, 6, 9, 13 ] },
+                            { "bp": [ 5, 8, 11, 16 ] },
+                            { "bp": [ 6, 9, 13, 19 ] },
+                            { "bp": [ 8, 11, 16, 22 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 6, 8, 12, 18 ] },
+                            { "bp": [ 7, 10, 14, 21 ] },
+                            { "bp": [ 8, 12, 17, 24 ] },
+                            { "bp": [ 10, 14, 20, 28 ] },
+                            { "bp": [ 12, 17, 24, 33 ] }
+                        ]
+                    },
+                    {
+                        "col": [
+                            { "bp": [ 9, 13, 18, 26 ] },
+                            { "bp": [ 10, 15, 21, 30 ] },
+                            { "bp": [ 12, 17, 25, 35 ] },
+                            { "bp": [ 14, 20, 29, 41 ] },
+                            { "bp": [ 17, 24, 34, 47 ] }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
+},{}],180:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var AppConstants = require('../constants/app-constants.js');
 
@@ -22500,7 +22707,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/app-constants.js":190,"../dispatchers/app-dispatcher.js":192}],180:[function(require,module,exports){
+},{"../constants/app-constants.js":193,"../dispatchers/app-dispatcher.js":196}],181:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 
@@ -22536,12 +22743,21 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/person-constants.js":191,"../dispatchers/app-dispatcher.js":192}],181:[function(require,module,exports){
+},{"../constants/person-constants.js":194,"../dispatchers/app-dispatcher.js":196}],182:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskActions = {
+}
+
+module.exports = RiskActions;
+
+},{"../dispatchers/app-dispatcher.js":196}],183:[function(require,module,exports){
 var React = require('react');
 var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
 var Ready = require('../components/ready.js');
 var Person = require('../components/person.js');
+var Risk = require('../components/risk.js');
 
 var getPage = function() {
     return { page: AppStore.getPage() };
@@ -22558,6 +22774,8 @@ var App = React.createClass({displayName: "App",
                 return React.createElement(Person, null); 
             case 'ready':
                 return React.createElement(Ready, null); 
+            case 'risk':
+                return React.createElement(Risk, null); 
             case 'home':
             default:
                 return React.createElement(Home, null);
@@ -22570,7 +22788,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../components/home.js":183,"../components/person.js":184,"../components/ready.js":185,"../stores/appStore.js":194,"react":178}],182:[function(require,module,exports){
+},{"../components/home.js":185,"../components/person.js":186,"../components/ready.js":187,"../components/risk.js":192,"../stores/appStore.js":198,"react":178}],184:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -22593,7 +22811,7 @@ var Footer = React.createClass({displayName: "Footer",
 
 module.exports = { Footer: Footer, Header: Header };
 
-},{"react":178}],183:[function(require,module,exports){
+},{"react":178}],185:[function(require,module,exports){
 var React = require('react');
 var AppActions = require('../actions/appActions.js');
 
@@ -22614,7 +22832,7 @@ var Home = React.createClass({displayName: "Home",
 
 module.exports = Home;
 
-},{"../actions/appActions.js":179,"react":178}],184:[function(require,module,exports){
+},{"../actions/appActions.js":180,"react":178}],186:[function(require,module,exports){
 var React = require('react');
 var PersonStore = require('../stores/personStore.js');
 var Personal = require('../components/registration/personal.js');
@@ -22649,7 +22867,7 @@ var Person = React.createClass({displayName: "Person",
 
 module.exports = Person;
 
-},{"../components/registration/lifestyle.js":186,"../components/registration/medical.js":187,"../components/registration/personal.js":188,"../stores/personStore.js":195,"react":178}],185:[function(require,module,exports){
+},{"../components/registration/lifestyle.js":188,"../components/registration/medical.js":189,"../components/registration/personal.js":190,"../stores/personStore.js":199,"react":178}],187:[function(require,module,exports){
 var React = require('react');
 var AppActions = require('../actions/appActions.js');
 var PersonStore = require('../stores/personStore.js');
@@ -22660,7 +22878,7 @@ var Ready = React.createClass({displayName: "Ready",
         AppActions.move('person');
     },
     handleSubmit: function() {
-        AppActions.move('next');
+        AppActions.move('risk');
     },
     render: function() {
         return React.createElement("div", {className: "reactComponentContainer"}, 
@@ -22687,7 +22905,7 @@ var Ready = React.createClass({displayName: "Ready",
 
 module.exports = Ready;
 
-},{"../actions/appActions.js":179,"../components/reuseables/definitionList.js":189,"../stores/personStore.js":195,"react":178}],186:[function(require,module,exports){
+},{"../actions/appActions.js":180,"../components/reuseables/definitionList.js":191,"../stores/personStore.js":199,"react":178}],188:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -22762,7 +22980,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],187:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":199,"react/addons":6}],189:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -22843,7 +23061,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],188:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":199,"react/addons":6}],190:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -22906,11 +23124,10 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],189:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":199,"react/addons":6}],191:[function(require,module,exports){
 var React = require('react');
 
 var toTitleCase = function(str){
-    console.log(str);
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 var getKeys = function(obj){
@@ -22926,7 +23143,6 @@ var DefinitionList = React.createClass({displayName: "DefinitionList",
                 React.createElement(DefinitionListItem, {title: toTitleCase(key), data: this.state.data[key]})
             );
         }.bind(this));
-        console.log(items);
         return React.createElement("div", {className: "col-sm-6"}, 
                     React.createElement("h4", null, toTitleCase(this.props.title)), 
                     React.createElement("ul", {className: "ul-horizontal definition-list"}, 
@@ -22947,12 +23163,46 @@ var DefinitionListItem = React.createClass({displayName: "DefinitionListItem",
 });
 module.exports = DefinitionList;
 
-},{"react":178}],190:[function(require,module,exports){
+},{"react":178}],192:[function(require,module,exports){
+var React = require('react');
+var AppActions = require('../actions/appActions.js');
+var RiskActions = require('../actions/riskActions.js');
+var PersonStore = require('../stores/personStore.js');
+var RiskStore = require('../stores/riskStore.js');
+
+var Risk = React.createClass({displayName: "Risk",  
+    handleCancel: function() {
+        AppActions.move('ready');
+    },
+    handleSubmit: function() {
+        AppActions.move('summary');
+    },
+    render: function() {
+        var risk = RiskStore.getRisk(PersonStore.getPerson());
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("h3", null, "Risk"), 
+            React.createElement("div", {className: "container"}, 
+                React.createElement("div", null, risk), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-sm-12"}, 
+                        React.createElement("button", {className: "btn", onClick: this.handleCancel}, " Back "), 
+                        React.createElement("button", {className: "btn", onClick: this.handleSubmit}, " Start ")
+                    )
+                )
+            )
+        )
+        ;
+    }
+});
+
+module.exports = Risk;
+
+},{"../actions/appActions.js":180,"../actions/riskActions.js":182,"../stores/personStore.js":199,"../stores/riskStore.js":200,"react":178}],193:[function(require,module,exports){
 module.exports = {
     MOVE: 'MOVE'
 };
 
-},{}],191:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 module.exports = {
     BACK: 'BACK',
     REG_PERSONAL: 'REG_PERSONAL',
@@ -22960,7 +23210,11 @@ module.exports = {
     REG_MEDICAL: 'REG_MEDICAL'
 };
 
-},{}],192:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
+module.exports = {
+};
+
+},{}],196:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('react/lib/Object.assign');
 
@@ -22975,7 +23229,7 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":3,"react/lib/Object.assign":34}],193:[function(require,module,exports){
+},{"flux":3,"react/lib/Object.assign":34}],197:[function(require,module,exports){
 var React = require('react');
 var App = require('./components/app.js');
 var Common = require('./components/common/common.js');
@@ -22988,7 +23242,7 @@ var mountComponent = React.createElement("div", {className: "reactAppContainer"}
                 )
                 ;
 React.render(mountComponent, mountNode);
-},{"./components/app.js":181,"./components/common/common.js":182,"react":178}],194:[function(require,module,exports){
+},{"./components/app.js":183,"./components/common/common.js":184,"react":178}],198:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/app-constants.js');
@@ -23028,7 +23282,7 @@ AppDispatcher.register(function (payload) {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants.js":190,"../dispatchers/app-dispatcher.js":192,"events":1,"react/lib/Object.assign":34}],195:[function(require,module,exports){
+},{"../constants/app-constants.js":193,"../dispatchers/app-dispatcher.js":196,"events":1,"react/lib/Object.assign":34}],199:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 var AppStore = require('../stores/appStore.js');
@@ -23046,6 +23300,11 @@ var calculateBMI = function () {
     return Math.round(bmi *10)/10;
 };
 
+var calculateTotCol = function () {
+    if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
+    return person.medical.ldl + person.medical.hdl;
+}
+
 var PersonStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -23056,10 +23315,30 @@ var PersonStore = assign({}, EventEmitter.prototype, {
     getSection: function(section){
         return person[section];
     },
+    getAgeGroup: function () {
+        var a = Math.floor((person.personal.age - 50) / 5) + 1;
+        if (a < 0) a = 0;
+        else if (a > 4) a = 4;
+        return a;
+    },
+    getColGroup: function(){
+        var c = Math.floor(person.medical.totCol - 5) + 1;
+        if (c < 0) c = 0;
+        else if (c > 4) c = 4;
+        return c;
+    },
+    getBpGroup: function(){
+        var s = Math.floor((person.medical.bpSys - 140) / 20) + 1;
+        if (s < 0) s = 0;
+        else if (s > 3) s = 3;
+        return s;
+    },
     setPerson: function (newPersonData) {
         person[step] = newPersonData;
         if (step == 'personal') {
             person.personal.BMI = calculateBMI();
+        } else if (step == 'medical') {
+            person.medical.totCol = calculateTotCol();
         }
         console.log(person)
     },
@@ -23075,7 +23354,6 @@ var PersonStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-    console.log(action);
     switch (action.actionType) {
         case PersonConstants.BACK:
             PersonStore.setStep(action.step);
@@ -23105,4 +23383,49 @@ AppDispatcher.register(function (payload) {
 
 module.exports = PersonStore;
 
-},{"../constants/person-constants.js":191,"../dispatchers/app-dispatcher.js":192,"../stores/appStore.js":194,"events":1,"react/lib/Object.assign":34}]},{},[193]);
+},{"../constants/person-constants.js":194,"../dispatchers/app-dispatcher.js":196,"../stores/appStore.js":198,"events":1,"react/lib/Object.assign":34}],200:[function(require,module,exports){
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+var RiskConstants = require('../constants/risk-constants.js');
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+var Risk = require('../../assets/risk.json');
+var PersonStore = require('./personStore.js');
+
+var CHANGE_EVENT = 'change';
+var person = {};
+var risk = 0;
+
+var calculateRisk = function (person) {
+    var r = person.gender == 'male' ? Risk.male : Risk.female;
+    r = person.smoke ? r.smoke[1] : r.smoke[0];
+    r = r.age[PersonStore.getAgeGroup()]
+    r = r.col[PersonStore.getColGroup()];
+    r = r.bp[PersonStore.getBpGroup()];
+    return r;
+};
+
+var RiskStore = assign({}, EventEmitter.prototype, {
+    emitChange: function () {
+        this.emit(CHANGE_EVENT);
+    },
+    getRisk: function(person){
+        return calculateRisk(person);
+    },
+    addChangeListener: function (callback) { this.on(CHANGE_EVENT, callback); },
+    removeChangeListener: function (callback) { this.removeListener(CHANGE_EVENT, callback); },
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    console.log(action);
+    switch (action.actionType) {
+        default:
+            break;
+    }
+
+    return true;
+});
+
+module.exports = RiskStore;
+
+},{"../../assets/risk.json":179,"../constants/risk-constants.js":195,"../dispatchers/app-dispatcher.js":196,"./personStore.js":199,"events":1,"react/lib/Object.assign":34}]},{},[197]);
