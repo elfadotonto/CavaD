@@ -20,12 +20,16 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
     getPerson: function () {
-        person.BMI = calculateBMI();
-        console.log(person);
         return person;
+    },
+    getSection: function(section){
+        return person[section];
     },
     setPerson: function (newPersonData) {
         person[step] = newPersonData;
+        if (step == 'personal') {
+            person.personal.BMI = calculateBMI();
+        }
         console.log(person)
     },
     getStep: function () {

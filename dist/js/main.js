@@ -22500,7 +22500,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/app-constants.js":189,"../dispatchers/app-dispatcher.js":191}],180:[function(require,module,exports){
+},{"../constants/app-constants.js":190,"../dispatchers/app-dispatcher.js":192}],180:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 
@@ -22536,7 +22536,7 @@ var AppActions = {
 
 module.exports = AppActions;
 
-},{"../constants/person-constants.js":190,"../dispatchers/app-dispatcher.js":191}],181:[function(require,module,exports){
+},{"../constants/person-constants.js":191,"../dispatchers/app-dispatcher.js":192}],181:[function(require,module,exports){
 var React = require('react');
 var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
@@ -22570,7 +22570,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../components/home.js":183,"../components/person.js":186,"../components/ready.js":188,"../stores/appStore.js":193,"react":178}],182:[function(require,module,exports){
+},{"../components/home.js":183,"../components/person.js":184,"../components/ready.js":185,"../stores/appStore.js":194,"react":178}],182:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -22615,9 +22615,82 @@ var Home = React.createClass({displayName: "Home",
 module.exports = Home;
 
 },{"../actions/appActions.js":179,"react":178}],184:[function(require,module,exports){
-var React = require('react/addons');
-var PersonActions = require('../actions/personActions.js');
+var React = require('react');
 var PersonStore = require('../stores/personStore.js');
+var Personal = require('../components/registration/personal.js');
+var Lifestyle = require('../components/registration/lifestyle.js');
+var Medical = require('../components/registration/medical.js');
+
+var getStep = function (){
+    return {step: PersonStore.getStep()};
+};
+
+var Person = React.createClass({displayName: "Person",
+    getInitialState: function() {
+        return getStep();
+    },
+    componentDidMount: function() { PersonStore.addChangeListener(this._onChange); }, 
+    componentWillUnmount: function() { PersonStore.removeChangeListener(this._onChange); },
+    render: function() {
+        switch(this.state.step){
+            case 'lifestyle':
+                return React.createElement(Lifestyle, null);
+            case 'medical':
+                return React.createElement(Medical, null);
+            case 'personal':
+            default:
+                return React.createElement(Personal, null) ;
+        }
+    },
+    _onChange: function() {
+        this.setState(getStep());
+    }
+});
+
+module.exports = Person;
+
+},{"../components/registration/lifestyle.js":186,"../components/registration/medical.js":187,"../components/registration/personal.js":188,"../stores/personStore.js":195,"react":178}],185:[function(require,module,exports){
+var React = require('react');
+var AppActions = require('../actions/appActions.js');
+var PersonStore = require('../stores/personStore.js');
+var DefinitionList = require('../components/reuseables/definitionList.js');
+
+var Ready = React.createClass({displayName: "Ready",  
+    handleCancel: function() {
+        AppActions.move('person');
+    },
+    handleSubmit: function() {
+        AppActions.move('next');
+    },
+    render: function() {
+        return React.createElement("div", {className: "reactComponentContainer"}, 
+            React.createElement("h3", null, "Personal data overview"), 
+            React.createElement("div", {className: "container"}, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(DefinitionList, {section: PersonStore.getSection('personal'), title: "Personal"}), 
+                    React.createElement(DefinitionList, {section: PersonStore.getSection('lifestyle'), title: "Lifestyle"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement(DefinitionList, {section: PersonStore.getSection('medical'), title: "Medical"})
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-sm-12"}, 
+                        React.createElement("button", {className: "btn", onClick: this.handleCancel}, " Back "), 
+                        React.createElement("button", {className: "btn", onClick: this.handleSubmit}, " Start ")
+                    )
+                )
+            )
+        )
+        ;
+    }
+});
+
+module.exports = Ready;
+
+},{"../actions/appActions.js":179,"../components/reuseables/definitionList.js":189,"../stores/personStore.js":195,"react":178}],186:[function(require,module,exports){
+var React = require('react/addons');
+var PersonActions = require('../../actions/personActions.js');
+var PersonStore = require('../../stores/personStore.js');
 
 var Personal = React.createClass({displayName: "Personal",
     mixins: [React.addons.LinkedStateMixin],
@@ -22689,10 +22762,10 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],185:[function(require,module,exports){
+},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],187:[function(require,module,exports){
 var React = require('react/addons');
-var PersonActions = require('../actions/personActions.js');
-var PersonStore = require('../stores/personStore.js');
+var PersonActions = require('../../actions/personActions.js');
+var PersonStore = require('../../stores/personStore.js');
 
 var Personal = React.createClass({displayName: "Personal",
     mixins: [React.addons.LinkedStateMixin],
@@ -22770,45 +22843,10 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],186:[function(require,module,exports){
-var React = require('react');
-var PersonStore = require('../stores/personStore.js');
-var Personal = require('../components/personal.js');
-var Lifestyle = require('../components/lifestyle.js');
-var Medical = require('../components/medical.js');
-
-var getStep = function (){
-    return {step: PersonStore.getStep()};
-};
-
-var Person = React.createClass({displayName: "Person",
-    getInitialState: function() {
-        return getStep();
-    },
-    componentDidMount: function() { PersonStore.addChangeListener(this._onChange); }, 
-    componentWillUnmount: function() { PersonStore.removeChangeListener(this._onChange); },
-    render: function() {
-        switch(this.state.step){
-            case 'lifestyle':
-                return React.createElement(Lifestyle, null);
-            case 'medical':
-                return React.createElement(Medical, null);
-            case 'personal':
-            default:
-                return React.createElement(Personal, null) ;
-        }
-    },
-    _onChange: function() {
-        this.setState(getStep());
-    }
-});
-
-module.exports = Person;
-
-},{"../components/lifestyle.js":184,"../components/medical.js":185,"../components/personal.js":187,"../stores/personStore.js":194,"react":178}],187:[function(require,module,exports){
+},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],188:[function(require,module,exports){
 var React = require('react/addons');
-var PersonActions = require('../actions/personActions.js');
-var PersonStore = require('../stores/personStore.js');
+var PersonActions = require('../../actions/personActions.js');
+var PersonStore = require('../../stores/personStore.js');
 
 var Personal = React.createClass({displayName: "Personal",
     mixins: [React.addons.LinkedStateMixin],
@@ -22868,93 +22906,53 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../actions/personActions.js":180,"../stores/personStore.js":194,"react/addons":6}],188:[function(require,module,exports){
+},{"../../actions/personActions.js":180,"../../stores/personStore.js":195,"react/addons":6}],189:[function(require,module,exports){
 var React = require('react');
-var AppActions = require('../actions/appActions.js');
-var PersonStore = require('../stores/personStore.js');
 
-var Ready = React.createClass({displayName: "Ready",  
-    handleCancel: function() {
-        AppActions.move('person');
-    },
-    handleSubmit: function() {
-        AppActions.move('next');
-    },
+var toTitleCase = function(str){
+    console.log(str);
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+var getKeys = function(obj){
+    return Object.keys(obj);
+};
+var DefinitionList = React.createClass({displayName: "DefinitionList",  
     getInitialState: function() {
-        return { data: PersonStore.getPerson() };
+        return { data: this.props.section};
     },
     render: function() {
-        return React.createElement("div", {className: "reactComponentContainer"}, 
-            React.createElement("h3", null, "Personal data overview"), 
-            React.createElement("div", {className: "container"}, 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-sm-6"}, 
-                        React.createElement("h4", null, "Personal"), 
-                        React.createElement("dl", {className: "dl-horizontal"}, 
-                            React.createElement("dt", null, "Age"), 
-                            React.createElement("dd", null, this.state.data.personal.age), 
-                            React.createElement("dt", null, "Gender"), 
-                            React.createElement("dd", null, this.state.data.personal.gender), 
-                            React.createElement("dt", null, "Weight"), 
-                            React.createElement("dd", null, this.state.data.personal.weight), 
-                            React.createElement("dt", null, "Height"), 
-                            React.createElement("dd", null, this.state.data.personal.height), 
-                            React.createElement("dt", null, "BMI"), 
-                            React.createElement("dd", null, this.state.data.BMI)
-                        )
-                    ), 
-                    React.createElement("div", {className: "col-sm-6"}, 
-                        React.createElement("h4", null, "Lifestyle"), 
-                        React.createElement("dl", {className: "dl-horizontal"}, 
-                            React.createElement("dt", null, "Smoking"), 
-                            React.createElement("dd", null, this.state.data.lifestyle.smoking), 
-                            React.createElement("dt", null, "Diet"), 
-                            React.createElement("dd", null, this.state.data.lifestyle.diet), 
-                            React.createElement("dt", null, "Exercise"), 
-                            React.createElement("dd", null, this.state.data.lifestyle.exercise), 
-                            React.createElement("dt", null, "Diabetes"), 
-                            React.createElement("dd", null, this.state.data.lifestyle.diabetes)
-                        )
-                    )
-                ), React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-sm-6"}, 
-                        React.createElement("h4", null, "Personal"), 
-                        React.createElement("dl", {className: "dl-horizontal"}, 
-                            React.createElement("dt", null, "LDL"), 
-                            React.createElement("dd", null, this.state.data.medical.ldl), 
-                            React.createElement("dt", null, "HDL"), 
-                            React.createElement("dd", null, this.state.data.medical.hdl), 
-                            React.createElement("dt", null, "Colesterol medication"), 
-                            React.createElement("dd", null, this.state.data.medical.colMeds), 
-                            React.createElement("dt", null, "BP systolic"), 
-                            React.createElement("dd", null, this.state.data.medical.bpSys), 
-                            React.createElement("dt", null, "BP diastolic"), 
-                            React.createElement("dd", null, this.state.data.medical.bpDia), 
-                            React.createElement("dt", null, "BP medication"), 
-                            React.createElement("dd", null, this.state.data.medical.bpMeds)
-                        )
-                    )
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-sm-12"}, 
-                        React.createElement("button", {className: "btn", onClick: this.handleCancel}, " Back "), 
-                        React.createElement("button", {className: "btn", onClick: this.handleSubmit}, " Start ")
+        var items = getKeys(this.state.data).map(function(key){
+            return (
+                React.createElement(DefinitionListItem, {title: toTitleCase(key), data: this.state.data[key]})
+            );
+        }.bind(this));
+        console.log(items);
+        return React.createElement("div", {className: "col-sm-6"}, 
+                    React.createElement("h4", null, toTitleCase(this.props.title)), 
+                    React.createElement("ul", {className: "ul-horizontal definition-list"}, 
+                        items
                     )
                 )
-            )
-        )
         ;
     }
 });
 
-module.exports = Ready;
+var DefinitionListItem = React.createClass({displayName: "DefinitionListItem",
+    render: function(){
+        return (React.createElement("li", null, 
+                    React.createElement("div", {className: "title"}, this.props.title), 
+                    React.createElement("div", {className: "data"}, this.props.data)
+                ));
+    }
+});
+module.exports = DefinitionList;
 
-},{"../actions/appActions.js":179,"../stores/personStore.js":194,"react":178}],189:[function(require,module,exports){
+},{"react":178}],190:[function(require,module,exports){
 module.exports = {
     MOVE: 'MOVE'
 };
 
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 module.exports = {
     BACK: 'BACK',
     REG_PERSONAL: 'REG_PERSONAL',
@@ -22962,7 +22960,7 @@ module.exports = {
     REG_MEDICAL: 'REG_MEDICAL'
 };
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var Dispatcher = require('flux').Dispatcher;
 var assign = require('react/lib/Object.assign');
 
@@ -22977,10 +22975,10 @@ var AppDispatcher = assign(new Dispatcher(), {
 
 module.exports = AppDispatcher;
 
-},{"flux":3,"react/lib/Object.assign":34}],192:[function(require,module,exports){
+},{"flux":3,"react/lib/Object.assign":34}],193:[function(require,module,exports){
 var React = require('react');
 var App = require('./components/app.js');
-var Common = require('./components/common.js');
+var Common = require('./components/common/common.js');
 
 var mountNode = document.getElementById('main');
 var mountComponent = React.createElement("div", {className: "reactAppContainer"}, 
@@ -22990,7 +22988,7 @@ var mountComponent = React.createElement("div", {className: "reactAppContainer"}
                 )
                 ;
 React.render(mountComponent, mountNode);
-},{"./components/app.js":181,"./components/common.js":182,"react":178}],193:[function(require,module,exports){
+},{"./components/app.js":181,"./components/common/common.js":182,"react":178}],194:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/app-constants.js');
@@ -23030,7 +23028,7 @@ AppDispatcher.register(function (payload) {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants.js":189,"../dispatchers/app-dispatcher.js":191,"events":1,"react/lib/Object.assign":34}],194:[function(require,module,exports){
+},{"../constants/app-constants.js":190,"../dispatchers/app-dispatcher.js":192,"events":1,"react/lib/Object.assign":34}],195:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 var AppStore = require('../stores/appStore.js');
@@ -23053,12 +23051,16 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         this.emit(CHANGE_EVENT);
     },
     getPerson: function () {
-        person.BMI = calculateBMI();
-        console.log(person);
         return person;
+    },
+    getSection: function(section){
+        return person[section];
     },
     setPerson: function (newPersonData) {
         person[step] = newPersonData;
+        if (step == 'personal') {
+            person.personal.BMI = calculateBMI();
+        }
         console.log(person)
     },
     getStep: function () {
@@ -23103,4 +23105,4 @@ AppDispatcher.register(function (payload) {
 
 module.exports = PersonStore;
 
-},{"../constants/person-constants.js":190,"../dispatchers/app-dispatcher.js":191,"../stores/appStore.js":193,"events":1,"react/lib/Object.assign":34}]},{},[192]);
+},{"../constants/person-constants.js":191,"../dispatchers/app-dispatcher.js":192,"../stores/appStore.js":194,"events":1,"react/lib/Object.assign":34}]},{},[193]);

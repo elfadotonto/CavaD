@@ -1,8 +1,8 @@
 var React = require('react');
 var PersonStore = require('../stores/personStore.js');
-var Personal = require('../components/personal.js');
-var Lifestyle = require('../components/lifestyle.js');
-var Medical = require('../components/medical.js');
+var Personal = require('../components/registration/personal.js');
+var Lifestyle = require('../components/registration/lifestyle.js');
+var Medical = require('../components/registration/medical.js');
 
 var getStep = function (){
     return {step: PersonStore.getStep()};

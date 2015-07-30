@@ -1,6 +1,6 @@
 var React = require('react/addons');
-var PersonActions = require('../actions/personActions.js');
-var PersonStore = require('../stores/personStore.js');
+var PersonActions = require('../../actions/personActions.js');
+var PersonStore = require('../../stores/personStore.js');
 
 var Personal = React.createClass({
     mixins: [React.addons.LinkedStateMixin],
