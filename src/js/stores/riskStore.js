@@ -37,9 +37,45 @@ var calculateRisk = function () {
     return r;
 };
 
+var initChanges = function () {
+    return {
+        takeCholMeds: false,
+        takeBpMeds: false
+    }
+};
+
+var toggleCholMeds = function () {
+    person.changes.takeCholMeds = !person.changes.takeCholMeds;
+    var ldlCoff = 1 - (person.medical.ldl / RiskConstants.CHOL_MEDS_LDL);
+    if (person.changes.takeCholMeds) {
+        person.medical.ldl = person.medical.ldl * ldlCoff;
+        person.medical.hdl = person.medical.hdl * RiskConstants.CHOL_MEDS_HDL;
+    } else {
+        person.medical.ldl = person.medical.ldl / ldlCoff;
+        person.medical.hdl = person.medical.hdl / RiskConstants.CHOL_MEDS_HDL;
+    }
+};
+
+var toggleBpMeds = function () {
+    person.changes.takeBpMeds = !person.changes.takeBpMeds;
+    if (person.changes.takeBpMeds) {
+        person.medical.bpSys -= RiskConstants.BP_MEDS_SYS;
+        person.medical.bpDia -= RiskConstants.BP_MEDS_DIA;
+    } else {
+        person.medical.bpSys += RiskConstants.BP_MEDS_SYS;
+        person.medical.bpDia += RiskConstants.BP_MEDS_DIA;
+    }
+};
+
 var RiskStore = assign({}, EventEmitter.prototype, {
     emitRiskChange: function () {
         this.emit(RiskConstants.RISK_CHANGE_EVENT);
+    },
+    emitCholesterolChange: function () {
+        this.emit(RiskConstants.CHOLESTEROL_CHANGE_EVENT);
+    },
+    emitBloodPressureChange: function () {
+        this.emit(RiskConstants.BLOODPRESSURE_CHANGE_EVENT);
     },
     getRisk: function() {
         return calculateRisk();
@@ -56,6 +92,12 @@ var RiskStore = assign({}, EventEmitter.prototype, {
             dia: person.medical.bpDia
         };
     },
+    getMedication: function(){
+        return {
+            cholMeds: person.medical.colMeds,
+            takeCholMeds: person.changes.takeCholMeds
+        };
+    },
     addChangeListener: function (event, callback) { this.on(event, callback); },
     removeChangeListener: function (event, callback) { this.removeListener(event, callback); },
 });
@@ -65,7 +107,17 @@ AppDispatcher.register(function (payload) {
     switch (action.actionType) {
         case PersonConstants.REG_MEDICAL:
             person = PersonStore.getPerson();
+            person.changes = initChanges();
             break;
+        case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
+            toggleCholMeds();
+            RiskStore.emitCholesterolChange();
+            RiskStore.emitRiskChange();
+            break;
+        case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
+            toggleBpMeds();
+            RiskStore.emitBloodPressureChange();
+            RiskStore.emitRiskChange();
         default:
             break;
     }

@@ -22745,13 +22745,24 @@ module.exports = AppActions;
 
 },{"../constants/person-constants.js":199,"../dispatchers/app-dispatcher.js":201}],182:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+var RiskConstants = require('../constants/risk-constants.js');
 
 var RiskActions = {
+    toggleCholMeds: function () {
+        AppDispatcher.handleViewAction({
+            actionType: RiskConstants.TOGGLE_CHOLESTEROL_MEDS
+        })
+    },
+    toggleBpMeds: function () {
+        AppDispatcher.handleViewAction({
+            actionType: RiskConstants.TOGGLE_BLOODPRESSURE_MEDS
+        })
+    }
 }
 
 module.exports = RiskActions;
 
-},{"../dispatchers/app-dispatcher.js":201}],183:[function(require,module,exports){
+},{"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201}],183:[function(require,module,exports){
 var React = require('react');
 var AppStore = require('../stores/appStore.js');
 var Home = require('../components/home.js');
@@ -23338,11 +23349,36 @@ module.exports = LifeStyle;
 },{"react":178}],197:[function(require,module,exports){
 var React = require('react');
 
+var RiskStore = require('../../stores/riskStore.js');
+var RiskActions = require('../../actions/riskActions.js');
+
+var getMedication = function(){
+    return {
+        meds: RiskStore.getMedication()
+    };
+};
+
 var Medication = React.createClass({displayName: "Medication",
+    getInitialState: function(){
+        return getMedication()
+    },
+    handleCholMeds: function() {
+        RiskActions.toggleCholMeds(this.state.meds.takeCholMeds);
+    },
+    handleBpMeds: function() {
+        RiskActions.toggleBpMeds(this.state.meds.takeBpMeds);
+    },
     render: function() {
         return React.createElement("div", {className: "col-sm-6"}, 
                     React.createElement("h4", null, "Medicinal changes"), 
-                    React.createElement("span", null)
+                    React.createElement("div", null, 
+                        React.createElement("span", null, "Cholesterol medicine"), 
+                        React.createElement("button", {className: "btn", onClick: this.handleCholMeds}, " Take meds")
+                    ), 
+                    React.createElement("div", null, 
+                        React.createElement("span", null, "Blood pressure medicine"), 
+                        React.createElement("button", {className: "btn", onClick: this.handleBpMeds}, " Take meds")
+                    )
                 )
         ;
     }
@@ -23350,7 +23386,7 @@ var Medication = React.createClass({displayName: "Medication",
 
 module.exports = Medication;
 
-},{"react":178}],198:[function(require,module,exports){
+},{"../../actions/riskActions.js":182,"../../stores/riskStore.js":205,"react":178}],198:[function(require,module,exports){
 module.exports = {
     MOVE: 'MOVE'
 };
@@ -23365,9 +23401,18 @@ module.exports = {
 
 },{}],200:[function(require,module,exports){
 module.exports = {
+    //EVENTS
     RISK_CHANGE_EVENT: 'RISK_CHANGE',
     CHOLESTEROL_CHANGE_EVENT: 'CHOLESTEROL_CHANGE',
     BLOODPRESSURE_CHANGE_EVENT: 'BLOODPRESSURE_CHANGE',
+    //ACTIONS
+    TOGGLE_CHOLESTEROL_MEDS: 'TOGGLE_CHOLESTEROL_MEDS',
+    TOGGLE_BLOODPRESSURE_MEDS: 'TOGGLE_BLOODPRESSURE_MEDS',
+    //NUMBERS
+    CHOL_MEDS_HDL: 1.1,
+    CHOL_MEDS_LDL: 15,
+    BP_MEDS_SYS: 11,
+    BP_MEDS_DIA: 7
 };
 
 },{}],201:[function(require,module,exports){
@@ -23559,9 +23604,45 @@ var calculateRisk = function () {
     return r;
 };
 
+var initChanges = function () {
+    return {
+        takeCholMeds: false,
+        takeBpMeds: false
+    }
+};
+
+var toggleCholMeds = function () {
+    person.changes.takeCholMeds = !person.changes.takeCholMeds;
+    var ldlCoff = 1 - (person.medical.ldl / RiskConstants.CHOL_MEDS_LDL);
+    if (person.changes.takeCholMeds) {
+        person.medical.ldl = person.medical.ldl * ldlCoff;
+        person.medical.hdl = person.medical.hdl * RiskConstants.CHOL_MEDS_HDL;
+    } else {
+        person.medical.ldl = person.medical.ldl / ldlCoff;
+        person.medical.hdl = person.medical.hdl / RiskConstants.CHOL_MEDS_HDL;
+    }
+};
+
+var toggleBpMeds = function () {
+    person.changes.takeBpMeds = !person.changes.takeBpMeds;
+    if (person.changes.takeBpMeds) {
+        person.medical.bpSys -= RiskConstants.BP_MEDS_SYS;
+        person.medical.bpDia -= RiskConstants.BP_MEDS_DIA;
+    } else {
+        person.medical.bpSys += RiskConstants.BP_MEDS_SYS;
+        person.medical.bpDia += RiskConstants.BP_MEDS_DIA;
+    }
+};
+
 var RiskStore = assign({}, EventEmitter.prototype, {
     emitRiskChange: function () {
         this.emit(RiskConstants.RISK_CHANGE_EVENT);
+    },
+    emitCholesterolChange: function () {
+        this.emit(RiskConstants.CHOLESTEROL_CHANGE_EVENT);
+    },
+    emitBloodPressureChange: function () {
+        this.emit(RiskConstants.BLOODPRESSURE_CHANGE_EVENT);
     },
     getRisk: function() {
         return calculateRisk();
@@ -23578,6 +23659,12 @@ var RiskStore = assign({}, EventEmitter.prototype, {
             dia: person.medical.bpDia
         };
     },
+    getMedication: function(){
+        return {
+            cholMeds: person.medical.colMeds,
+            takeCholMeds: person.changes.takeCholMeds
+        };
+    },
     addChangeListener: function (event, callback) { this.on(event, callback); },
     removeChangeListener: function (event, callback) { this.removeListener(event, callback); },
 });
@@ -23587,7 +23674,17 @@ AppDispatcher.register(function (payload) {
     switch (action.actionType) {
         case PersonConstants.REG_MEDICAL:
             person = PersonStore.getPerson();
+            person.changes = initChanges();
             break;
+        case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
+            toggleCholMeds();
+            RiskStore.emitCholesterolChange();
+            RiskStore.emitRiskChange();
+            break;
+        case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
+            toggleBpMeds();
+            RiskStore.emitBloodPressureChange();
+            RiskStore.emitRiskChange();
         default:
             break;
     }
