@@ -1,5 +1,7 @@
 var React = require('react');
+
 var PersonStore = require('../stores/personStore.js');
+
 var Personal = require('../components/registration/personal.js');
 var Lifestyle = require('../components/registration/lifestyle.js');
 var Medical = require('../components/registration/medical.js');

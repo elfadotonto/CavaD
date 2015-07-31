@@ -1,37 +1,71 @@
-var AppDispatcher = require('../dispatchers/app-dispatcher.js');
-var RiskConstants = require('../constants/risk-constants.js');
 var EventEmitter = require('events').EventEmitter;
 var assign = require('react/lib/Object.assign');
 var Risk = require('../../assets/risk.json');
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskConstants = require('../constants/risk-constants.js');
+var PersonConstants = require('../constants/person-constants.js');
+
 var PersonStore = require('./personStore.js');
 
-var CHANGE_EVENT = 'change';
 var person = {};
-var risk = 0;
 
-var calculateRisk = function (person) {
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
+var getAgeGroup = function () {
+    return limit(0, 4, Math.floor((person.personal.age - 50) / 5) + 1);
+};
+
+var getColGroup = function(){
+    return limit(0, 4, Math.floor(person.medical.totCol - 5) + 1);
+};
+
+var getBpGroup = function(){
+    return limit(0, 3, Math.floor((person.medical.bpSys - 140) / 20) + 1);
+};
+
+var calculateRisk = function () {
     var r = person.gender == 'male' ? Risk.male : Risk.female;
     r = person.smoke ? r.smoke[1] : r.smoke[0];
-    r = r.age[PersonStore.getAgeGroup()]
-    r = r.col[PersonStore.getColGroup()];
-    r = r.bp[PersonStore.getBpGroup()];
+    r = r.age[getAgeGroup()]
+    r = r.col[getColGroup()];
+    r = r.bp[getBpGroup()];
     return r;
 };
 
 var RiskStore = assign({}, EventEmitter.prototype, {
-    emitChange: function () {
-        this.emit(CHANGE_EVENT);
+    emitRiskChange: function () {
+        this.emit(RiskConstants.RISK_CHANGE_EVENT);
     },
-    getRisk: function(person){
-        return calculateRisk(person);
+    getRisk: function() {
+        return calculateRisk();
     },
-    addChangeListener: function (callback) { this.on(CHANGE_EVENT, callback); },
-    removeChangeListener: function (callback) { this.removeListener(CHANGE_EVENT, callback); },
+    getCholesterol: function () {
+        return {
+            ldl: person.medical.ldl,
+            hdl: person.medical.hdl
+        };
+    },
+    getBloodPressure: function () {
+        return {
+            sys: person.medical.bpSys,
+            dia: person.medical.bpDia
+        };
+    },
+    addChangeListener: function (event, callback) { this.on(event, callback); },
+    removeChangeListener: function (event, callback) { this.removeListener(event, callback); },
 });
 
 AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
+        case PersonConstants.REG_MEDICAL:
+            person = PersonStore.getPerson();
+            break;
         default:
             break;
     }
