@@ -17,7 +17,7 @@ var calculateBMI = function () {
 
 var calculateTotCol = function () {
     if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
-    return +person.medical.ldl + person.medical.hdl;
+    return parseInt(person.medical.ldl) + parseInt(person.medical.hdl);
 }
 
 var PersonStore = assign({}, EventEmitter.prototype, {

@@ -23274,7 +23274,7 @@ var getChol = function(){
 };
 
 var twoDecimals = function(number){
-    return number.toFixed(2);
+    return parseFloat(number).toFixed(2);
 };
 
 var Cholesterol = React.createClass({displayName: "Cholesterol",  
@@ -23520,7 +23520,7 @@ var calculateBMI = function () {
 
 var calculateTotCol = function () {
     if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
-    return +person.medical.ldl + person.medical.hdl;
+    return parseInt(person.medical.ldl) + parseInt(person.medical.hdl);
 }
 
 var PersonStore = assign({}, EventEmitter.prototype, {

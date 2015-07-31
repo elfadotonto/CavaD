@@ -9,7 +9,7 @@ var getChol = function(){
 };
 
 var twoDecimals = function(number){
-    return number.toFixed(2);
+    return parseFloat(number).toFixed(2);
 };
 
 var Cholesterol = React.createClass({  
