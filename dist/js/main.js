@@ -23273,6 +23273,10 @@ var getChol = function(){
     };
 };
 
+var twoDecimals = function(number){
+    return number.toFixed(2);
+};
+
 var Cholesterol = React.createClass({displayName: "Cholesterol",  
     getInitialState: function(){
         return getChol();
@@ -23280,15 +23284,17 @@ var Cholesterol = React.createClass({displayName: "Cholesterol",
     componentDidMount: function() { RiskStore.addChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); }, 
     componentWillUnmount: function() { RiskStore.removeChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); },
     render: function() {
+        var hdl = twoDecimals(this.state.chol.hdl);
+        var ldl = twoDecimals(this.state.chol.ldl);
         return React.createElement("div", {className: "col-sm-6"}, 
                     React.createElement("h4", null, "Cholesterol"), 
                     React.createElement("div", null, 
                         React.createElement("span", null, "HDL"), 
-                        React.createElement("span", null, this.state.chol.hdl)
+                        React.createElement("span", null, hdl)
                     ), 
                     React.createElement("div", null, 
                         React.createElement("span", null, "LDL"), 
-                        React.createElement("span", null, this.state.chol.ldl)
+                        React.createElement("span", null, ldl)
                     )
                 )
         ;
@@ -23412,7 +23418,19 @@ module.exports = {
     CHOL_MEDS_HDL: 1.1,
     CHOL_MEDS_LDL: 15,
     BP_MEDS_SYS: 11,
-    BP_MEDS_DIA: 7
+    BP_MEDS_DIA: 7,
+    WEIGHT_HDL: 1.04,
+    WEIGHT_LDL: 0.97,
+    SMOKE_HDL: 1.14,
+    SMOKE_LDL: 1,
+    EXERCIZE_SYS: 6,
+    EXERCIZE_DIA: 6,
+    EXERCIZE_HDL: 1.04,
+    EXERCIZE_LDL: 0.97,
+    DIET_SYS: 9,
+    DIET_DIA: 5,
+    DIET_LDL: 0.95,
+    DIET_HDL: 1
 };
 
 },{}],201:[function(require,module,exports){
@@ -23497,7 +23515,7 @@ var calculateBMI = function () {
     if (!person.personal || !person.personal.height || !person.personal.weight) { return 0 };
     var hCm = person.personal.height / 100;
     var bmi = person.personal.weight / Math.pow(hCm, 2);
-    return Math.round(bmi *10)/10;
+    return Math.round(bmi * 10) / 10;
 };
 
 var calculateTotCol = function () {
@@ -23673,7 +23691,7 @@ AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
         case PersonConstants.REG_MEDICAL:
-            person = PersonStore.getPerson();
+            person = Object.create(PersonStore.getPerson());
             person.changes = initChanges();
             break;
         case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
@@ -23685,6 +23703,7 @@ AppDispatcher.register(function (payload) {
             toggleBpMeds();
             RiskStore.emitBloodPressureChange();
             RiskStore.emitRiskChange();
+            break;
         default:
             break;
     }

@@ -106,7 +106,7 @@ AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
         case PersonConstants.REG_MEDICAL:
-            person = PersonStore.getPerson();
+            person = Object.create(PersonStore.getPerson());
             person.changes = initChanges();
             break;
         case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
@@ -118,6 +118,7 @@ AppDispatcher.register(function (payload) {
             toggleBpMeds();
             RiskStore.emitBloodPressureChange();
             RiskStore.emitRiskChange();
+            break;
         default:
             break;
     }

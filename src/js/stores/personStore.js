@@ -12,7 +12,7 @@ var calculateBMI = function () {
     if (!person.personal || !person.personal.height || !person.personal.weight) { return 0 };
     var hCm = person.personal.height / 100;
     var bmi = person.personal.weight / Math.pow(hCm, 2);
-    return Math.round(bmi *10)/10;
+    return Math.round(bmi * 10) / 10;
 };
 
 var calculateTotCol = function () {
