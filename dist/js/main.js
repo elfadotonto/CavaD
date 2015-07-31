@@ -23629,27 +23629,45 @@ var initChanges = function () {
     }
 };
 
+var setChol = function (hdl, ldl) {
+    person.medical.ldl = ldl;
+    person.medical.hdl = hdl;
+    RiskStore.emitCholesterolChange();
+};
+
+var setBp = function (sys, dia) {
+    person.medical.bpSys = sys;
+    person.medical.bpDia = dia;
+    RiskStore.emitBloodPressureChange();
+};
+
 var toggleCholMeds = function () {
     person.changes.takeCholMeds = !person.changes.takeCholMeds;
     var ldlCoff = 1 - (person.medical.ldl / RiskConstants.CHOL_MEDS_LDL);
+    var ldl;
+    var hdl;
     if (person.changes.takeCholMeds) {
-        person.medical.ldl = person.medical.ldl * ldlCoff;
-        person.medical.hdl = person.medical.hdl * RiskConstants.CHOL_MEDS_HDL;
+        ldl = person.medical.ldl * ldlCoff;
+        hdl = person.medical.hdl * RiskConstants.CHOL_MEDS_HDL;
     } else {
-        person.medical.ldl = person.medical.ldl / ldlCoff;
-        person.medical.hdl = person.medical.hdl / RiskConstants.CHOL_MEDS_HDL;
+        ldl = person.medical.ldl / ldlCoff;
+        hdl = person.medical.hdl / RiskConstants.CHOL_MEDS_HDL;
     }
+    setChol(hdl, ldl);
 };
 
 var toggleBpMeds = function () {
     person.changes.takeBpMeds = !person.changes.takeBpMeds;
+    var sys;
+    var dia;
     if (person.changes.takeBpMeds) {
-        person.medical.bpSys -= RiskConstants.BP_MEDS_SYS;
-        person.medical.bpDia -= RiskConstants.BP_MEDS_DIA;
+        sys = person.medical.bpSys - RiskConstants.BP_MEDS_SYS;
+        dia = person.medical.bpDia - RiskConstants.BP_MEDS_DIA;
     } else {
-        person.medical.bpSys += RiskConstants.BP_MEDS_SYS;
-        person.medical.bpDia += RiskConstants.BP_MEDS_DIA;
+        sys = person.medical.bpSys + RiskConstants.BP_MEDS_SYS;
+        dia = person.medical.bpDia + RiskConstants.BP_MEDS_DIA;
     }
+    setBp(sys, dia);
 };
 
 var RiskStore = assign({}, EventEmitter.prototype, {
@@ -23696,12 +23714,10 @@ AppDispatcher.register(function (payload) {
             break;
         case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
             toggleCholMeds();
-            RiskStore.emitCholesterolChange();
             RiskStore.emitRiskChange();
             break;
         case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
             toggleBpMeds();
-            RiskStore.emitBloodPressureChange();
             RiskStore.emitRiskChange();
             break;
         default:
