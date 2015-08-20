@@ -1,11 +1,11 @@
 var React = require('react');
 
-var RiskStore = require('../../stores/riskStore.js');
+var PersonStore = require('../../stores/personStore.js');
 var RiskActions = require('../../actions/riskActions.js');
 
 var getMedication = function(){
     return {
-        meds: RiskStore.getMedication()
+        meds: PersonStore.getMedication()
     };
 };
 
@@ -14,10 +14,10 @@ var Medication = React.createClass({
         return getMedication()
     },
     handleCholMeds: function() {
-        RiskActions.toggleCholMeds(this.state.meds.takeCholMeds);
+        RiskActions.toggleCholMeds(!this.state.cholMeds);
     },
     handleBpMeds: function() {
-        RiskActions.toggleBpMeds(this.state.meds.takeBpMeds);
+        RiskActions.toggleBpMeds(!this.state.bpMeds);
     },
     render: function() {
         return <div className="col-sm-6">

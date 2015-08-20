@@ -1,10 +1,10 @@
 var React = require('react');
-var RiskStore = require('../../stores/riskStore.js');
+var CholStore = require('../../stores/cholStore.js');
 var RiskConstants = require('../../constants/risk-constants.js');
 
 var getChol = function(){
     return {
-        chol: RiskStore.getCholesterol()
+        chol: CholStore.getCholesterol()
     };
 };
 
@@ -16,8 +16,8 @@ var Cholesterol = React.createClass({
     getInitialState: function(){
         return getChol();
     },
-    componentDidMount: function() { RiskStore.addChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); }, 
-    componentWillUnmount: function() { RiskStore.removeChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); },
+    componentDidMount: function() { CholStore.addChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); }, 
+    componentWillUnmount: function() { CholStore.removeChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); },
     render: function() {
         var hdl = twoDecimals(this.state.chol.hdl);
         var ldl = twoDecimals(this.state.chol.ldl);

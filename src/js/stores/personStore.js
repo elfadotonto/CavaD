@@ -8,17 +8,18 @@ var CHANGE_EVENT = 'change';
 var person = {};
 var step = 'personal';
 
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
 var calculateBMI = function () {
     if (!person.personal || !person.personal.height || !person.personal.weight) { return 0 };
     var hCm = person.personal.height / 100;
     var bmi = person.personal.weight / Math.pow(hCm, 2);
     return Math.round(bmi * 10) / 10;
 };
-
-var calculateTotCol = function () {
-    if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
-    return parseInt(person.medical.ldl) + parseInt(person.medical.hdl);
-}
 
 var PersonStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
@@ -34,9 +35,22 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         person[step] = newPersonData;
         if (step == 'personal') {
             person.personal.BMI = calculateBMI();
-        } else if (step == 'medical') {
-            person.medical.totCol = calculateTotCol();
         }
+    },
+    getAgeGroup: function () {
+        return limit(0, 4, Math.floor((person.personal.age - 50) / 5) + 1);
+    },
+    getGender: function() {
+        return person.personal.gender == 'male';
+    },
+    getSmoke: function() {
+        return person.smoke;
+    },
+    getMedication: function() {
+        return {
+            cholMeds: person.medical.colMeds,
+            bpMeds: person.medical.bpMeds
+        };
     },
     getStep: function () {
         return step;

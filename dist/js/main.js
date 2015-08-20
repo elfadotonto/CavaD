@@ -22748,14 +22748,16 @@ var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var RiskConstants = require('../constants/risk-constants.js');
 
 var RiskActions = {
-    toggleCholMeds: function () {
+    toggleCholMeds: function (value) {
         AppDispatcher.handleViewAction({
-            actionType: RiskConstants.TOGGLE_CHOLESTEROL_MEDS
+            actionType: RiskConstants.TOGGLE_CHOLESTEROL_MEDS,
+            value: value
         })
     },
-    toggleBpMeds: function () {
+    toggleBpMeds: function (value) {
         AppDispatcher.handleViewAction({
-            actionType: RiskConstants.TOGGLE_BLOODPRESSURE_MEDS
+            actionType: RiskConstants.TOGGLE_BLOODPRESSURE_MEDS,
+            value: value
         })
     }
 }
@@ -22799,7 +22801,7 @@ var App = React.createClass({displayName: "App",
 
 module.exports = App;
 
-},{"../components/home.js":185,"../components/person.js":186,"../components/ready.js":187,"../components/risk.js":192,"../stores/appStore.js":203,"react":178}],184:[function(require,module,exports){
+},{"../components/home.js":185,"../components/person.js":186,"../components/ready.js":187,"../components/risk.js":192,"../stores/appStore.js":205,"react":178}],184:[function(require,module,exports){
 var React = require('react');
 
 var Header = React.createClass({displayName: "Header",
@@ -22880,7 +22882,7 @@ var Person = React.createClass({displayName: "Person",
 
 module.exports = Person;
 
-},{"../components/registration/lifestyle.js":188,"../components/registration/medical.js":189,"../components/registration/personal.js":190,"../stores/personStore.js":204,"react":178}],187:[function(require,module,exports){
+},{"../components/registration/lifestyle.js":188,"../components/registration/medical.js":189,"../components/registration/personal.js":190,"../stores/personStore.js":208,"react":178}],187:[function(require,module,exports){
 var React = require('react');
 var AppActions = require('../actions/appActions.js');
 var PersonStore = require('../stores/personStore.js');
@@ -22918,7 +22920,7 @@ var Ready = React.createClass({displayName: "Ready",
 
 module.exports = Ready;
 
-},{"../actions/appActions.js":180,"../components/reuseables/definitionList.js":191,"../stores/personStore.js":204,"react":178}],188:[function(require,module,exports){
+},{"../actions/appActions.js":180,"../components/reuseables/definitionList.js":191,"../stores/personStore.js":208,"react":178}],188:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -22993,7 +22995,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":181,"../../stores/personStore.js":204,"react/addons":6}],189:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":208,"react/addons":6}],189:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -23074,7 +23076,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":181,"../../stores/personStore.js":204,"react/addons":6}],190:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":208,"react/addons":6}],190:[function(require,module,exports){
 var React = require('react/addons');
 var PersonActions = require('../../actions/personActions.js');
 var PersonStore = require('../../stores/personStore.js');
@@ -23137,7 +23139,7 @@ var Personal = React.createClass({displayName: "Personal",
 
 module.exports = Personal;
 
-},{"../../actions/personActions.js":181,"../../stores/personStore.js":204,"react/addons":6}],191:[function(require,module,exports){
+},{"../../actions/personActions.js":181,"../../stores/personStore.js":208,"react/addons":6}],191:[function(require,module,exports){
 var React = require('react');
 
 var toTitleCase = function(str){
@@ -23226,12 +23228,12 @@ module.exports = Risk;
 
 },{"../actions/appActions.js":180,"../actions/riskActions.js":182,"../components/risk/bloodPressure.js":193,"../components/risk/cholesterol.js":194,"../components/risk/current.js":195,"../components/risk/lifestyle.js":196,"../components/risk/medication.js":197,"react":178}],193:[function(require,module,exports){
 var React = require('react');
-var RiskStore = require('../../stores/riskStore.js');
+var BpStore = require('../../stores/bpStore.js');
 var RiskConstants = require('../../constants/risk-constants.js');
 
 var getBp = function(){
     return {
-        bp: RiskStore.getBloodPressure()
+        bp: BpStore.getBloodPressure()
     };
 };
 
@@ -23239,8 +23241,8 @@ var BloodPressure = React.createClass({displayName: "BloodPressure",
     getInitialState: function(){
         return getBp();
     }, 
-    componentDidMount: function() { RiskStore.addChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); }, 
-    componentWillUnmount: function() { RiskStore.removeChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); },
+    componentDidMount: function() { BpStore.addChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); }, 
+    componentWillUnmount: function() { BpStore.removeChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); },
     render: function() {
         return React.createElement("div", {className: "col-sm-6"}, 
                     React.createElement("h4", null, "Blood pressure"), 
@@ -23262,14 +23264,14 @@ var BloodPressure = React.createClass({displayName: "BloodPressure",
 
 module.exports = BloodPressure;
 
-},{"../../constants/risk-constants.js":200,"../../stores/riskStore.js":205,"react":178}],194:[function(require,module,exports){
+},{"../../constants/risk-constants.js":200,"../../stores/bpStore.js":206,"react":178}],194:[function(require,module,exports){
 var React = require('react');
-var RiskStore = require('../../stores/riskStore.js');
+var CholStore = require('../../stores/cholStore.js');
 var RiskConstants = require('../../constants/risk-constants.js');
 
 var getChol = function(){
     return {
-        chol: RiskStore.getCholesterol()
+        chol: CholStore.getCholesterol()
     };
 };
 
@@ -23281,8 +23283,8 @@ var Cholesterol = React.createClass({displayName: "Cholesterol",
     getInitialState: function(){
         return getChol();
     },
-    componentDidMount: function() { RiskStore.addChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); }, 
-    componentWillUnmount: function() { RiskStore.removeChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); },
+    componentDidMount: function() { CholStore.addChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); }, 
+    componentWillUnmount: function() { CholStore.removeChangeListener(RiskConstants.CHOLESTEROL_CHANGE_EVENT, this._onChange); },
     render: function() {
         var hdl = twoDecimals(this.state.chol.hdl);
         var ldl = twoDecimals(this.state.chol.ldl);
@@ -23306,7 +23308,7 @@ var Cholesterol = React.createClass({displayName: "Cholesterol",
 
 module.exports = Cholesterol;
 
-},{"../../constants/risk-constants.js":200,"../../stores/riskStore.js":205,"react":178}],195:[function(require,module,exports){
+},{"../../constants/risk-constants.js":200,"../../stores/cholStore.js":207,"react":178}],195:[function(require,module,exports){
 var React = require('react');
 var RiskStore = require('../../stores/riskStore.js');
 var RiskConstants = require('../../constants/risk-constants.js');
@@ -23337,7 +23339,7 @@ var Current = React.createClass({displayName: "Current",
 
 module.exports = Current;
 
-},{"../../constants/risk-constants.js":200,"../../stores/riskStore.js":205,"react":178}],196:[function(require,module,exports){
+},{"../../constants/risk-constants.js":200,"../../stores/riskStore.js":209,"react":178}],196:[function(require,module,exports){
 var React = require('react');
 
 var LifeStyle = React.createClass({displayName: "LifeStyle",  
@@ -23355,12 +23357,12 @@ module.exports = LifeStyle;
 },{"react":178}],197:[function(require,module,exports){
 var React = require('react');
 
-var RiskStore = require('../../stores/riskStore.js');
+var PersonStore = require('../../stores/personStore.js');
 var RiskActions = require('../../actions/riskActions.js');
 
 var getMedication = function(){
     return {
-        meds: RiskStore.getMedication()
+        meds: PersonStore.getMedication()
     };
 };
 
@@ -23369,10 +23371,10 @@ var Medication = React.createClass({displayName: "Medication",
         return getMedication()
     },
     handleCholMeds: function() {
-        RiskActions.toggleCholMeds(this.state.meds.takeCholMeds);
+        RiskActions.toggleCholMeds(!this.state.cholMeds);
     },
     handleBpMeds: function() {
-        RiskActions.toggleBpMeds(this.state.meds.takeBpMeds);
+        RiskActions.toggleBpMeds(!this.state.bpMeds);
     },
     render: function() {
         return React.createElement("div", {className: "col-sm-6"}, 
@@ -23392,7 +23394,7 @@ var Medication = React.createClass({displayName: "Medication",
 
 module.exports = Medication;
 
-},{"../../actions/riskActions.js":182,"../../stores/riskStore.js":205,"react":178}],198:[function(require,module,exports){
+},{"../../actions/riskActions.js":182,"../../stores/personStore.js":208,"react":178}],198:[function(require,module,exports){
 module.exports = {
     MOVE: 'MOVE'
 };
@@ -23462,6 +23464,156 @@ var mountComponent = React.createElement("div", {className: "reactAppContainer"}
                 ;
 React.render(mountComponent, mountNode);
 },{"./components/app.js":183,"./components/common/common.js":184,"react":178}],203:[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskConstants = require('../constants/risk-constants.js');
+var PersonConstants = require('../constants/person-constants.js');
+
+var PersonStore = require('./personStore.js');
+
+var bp = {};
+
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
+var setBp = function (sys, dia) {
+    bp.sys = sys;
+    bp.dia = dia;
+    BpStore.emitBloodPressureChange();
+};
+
+var toggleBpMeds = function (value) {
+    var sys;
+    var dia;
+    if (value) {
+        sys = bp.sys - RiskConstants.BP_MEDS_SYS;
+        dia = bp.dia - RiskConstants.BP_MEDS_DIA;
+    } else {
+        sys = bp.sys + RiskConstants.BP_MEDS_SYS;
+        dia = bp.dia + RiskConstants.BP_MEDS_DIA;
+    }
+    setBp(sys, dia);
+};
+
+var BpStore = assign({}, EventEmitter.prototype, {
+    emitBloodPressureChange: function() {
+        this.emit(RiskConstants.BLOODPRESSURE_CHANGE_EVENT);
+    },
+    getBloodPressure: function() {
+        return bp;
+    },
+    getBpGroup: function() {
+        return limit(0, 3, Math.floor((bp.sys - 140) / 20) + 1);
+    },
+    addChangeListener: function(event, callback) { this.on(event, callback); },
+    removeChangeListener: function(event, callback) { this.removeListener(event, callback); }
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    switch (action.actionType) {
+        case PersonConstants.REG_MEDICAL:
+            var medical = Object.create(PersonStore.getSection('medical'));
+            setBp(medical.bpSys, medical.bpDia);
+            break;
+        case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
+            toggleBpMeds(action.value);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+});
+
+module.exports = BpStore;
+
+},{"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./personStore.js":208,"events":1,"react/lib/Object.assign":34}],204:[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskConstants = require('../constants/risk-constants.js');
+var PersonConstants = require('../constants/person-constants.js');
+
+var PersonStore = require('./personStore.js');
+
+var chol = {};
+
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
+var calculateTotCol = function () {
+    if (!chol || !chol.ldl || !chol.hdl) { return 0 };
+    return parseInt(chol.ldl) + parseInt(chol.hdl);
+};
+
+var setChol = function (hdl, ldl) {
+    chol.ldl = ldl;
+    chol.hdl = hdl;
+    chol.tot = calculateTotCol();
+    CholStore.emitCholesterolChange();
+};
+
+var toggleCholMeds = function (value) {
+    var ldlCoff = 1 - (chol.ldl / RiskConstants.CHOL_MEDS_LDL);
+    var ldl;
+    var hdl;
+    if (value) {
+        ldl = chol.ldl * ldlCoff;
+        hdl = chol.hdl * RiskConstants.CHOL_MEDS_HDL;
+    } else {
+        ldl = chol.ldl / ldlCoff;
+        hdl = chol.hdl / RiskConstants.CHOL_MEDS_HDL;
+    }
+    setChol(hdl, ldl);
+};
+
+var CholStore = assign({}, EventEmitter.prototype, {
+    emitCholesterolChange: function() {
+        this.emit(RiskConstants.CHOLESTEROL_CHANGE_EVENT);
+    },
+    getCholesterol: function() {
+        return {
+            ldl: chol.ldl,
+            hdl: chol.hdl
+        };
+    },
+    getColGroup: function() {
+        return limit(0, 4, Math.floor(chol.tot - 5) + 1);
+    },
+    addChangeListener: function(event, callback) { this.on(event, callback); },
+    removeChangeListener: function(event, callback) { this.removeListener(event, callback); },
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    switch (action.actionType) {
+        case PersonConstants.REG_MEDICAL:
+            var medical = Object.create(PersonStore.getSection('medical'));
+            setChol(medical.hdl, medical.ldl);
+            break;
+        case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
+            toggleCholMeds(action.value);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+});
+
+module.exports = CholStore;
+
+},{"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./personStore.js":208,"events":1,"react/lib/Object.assign":34}],205:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var EventEmitter = require('events').EventEmitter;
 var AppConstants = require('../constants/app-constants.js');
@@ -23500,7 +23652,157 @@ AppDispatcher.register(function (payload) {
 
 module.exports = AppStore;
 
-},{"../constants/app-constants.js":198,"../dispatchers/app-dispatcher.js":201,"events":1,"react/lib/Object.assign":34}],204:[function(require,module,exports){
+},{"../constants/app-constants.js":198,"../dispatchers/app-dispatcher.js":201,"events":1,"react/lib/Object.assign":34}],206:[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskConstants = require('../constants/risk-constants.js');
+var PersonConstants = require('../constants/person-constants.js');
+
+var PersonStore = require('./personStore.js');
+
+var bp = {};
+
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
+var setBp = function (sys, dia) {
+    bp.sys = sys;
+    bp.dia = dia;
+    BpStore.emitBloodPressureChange();
+};
+
+var toggleBpMeds = function (value) {
+    var sys;
+    var dia;
+    if (value) {
+        sys = bp.sys - RiskConstants.BP_MEDS_SYS;
+        dia = bp.dia - RiskConstants.BP_MEDS_DIA;
+    } else {
+        sys = bp.sys + RiskConstants.BP_MEDS_SYS;
+        dia = bp.dia + RiskConstants.BP_MEDS_DIA;
+    }
+    setBp(sys, dia);
+};
+
+var BpStore = assign({}, EventEmitter.prototype, {
+    emitBloodPressureChange: function() {
+        this.emit(RiskConstants.BLOODPRESSURE_CHANGE_EVENT);
+    },
+    getBloodPressure: function() {
+        return bp;
+    },
+    getBpGroup: function() {
+        return limit(0, 3, Math.floor((bp.sys - 140) / 20) + 1);
+    },
+    addChangeListener: function(event, callback) { this.on(event, callback); },
+    removeChangeListener: function(event, callback) { this.removeListener(event, callback); }
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    switch (action.actionType) {
+        case PersonConstants.REG_MEDICAL:
+            var medical = Object.create(PersonStore.getSection('medical'));
+            setBp(medical.bpSys, medical.bpDia);
+            break;
+        case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
+            toggleBpMeds(action.value);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+});
+
+module.exports = BpStore;
+
+},{"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./personStore.js":208,"events":1,"react/lib/Object.assign":34}],207:[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter;
+var assign = require('react/lib/Object.assign');
+var AppDispatcher = require('../dispatchers/app-dispatcher.js');
+
+var RiskConstants = require('../constants/risk-constants.js');
+var PersonConstants = require('../constants/person-constants.js');
+
+var PersonStore = require('./personStore.js');
+
+var chol = {};
+
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
+var calculateTotCol = function () {
+    if (!chol || !chol.ldl || !chol.hdl) { return 0 };
+    return parseInt(chol.ldl) + parseInt(chol.hdl);
+};
+
+var setChol = function (hdl, ldl) {
+    chol.ldl = ldl;
+    chol.hdl = hdl;
+    chol.tot = calculateTotCol();
+    CholStore.emitCholesterolChange();
+};
+
+var toggleCholMeds = function (value) {
+    var ldlCoff = 1 - (chol.ldl / RiskConstants.CHOL_MEDS_LDL);
+    var ldl;
+    var hdl;
+    if (value) {
+        ldl = chol.ldl * ldlCoff;
+        hdl = chol.hdl * RiskConstants.CHOL_MEDS_HDL;
+    } else {
+        ldl = chol.ldl / ldlCoff;
+        hdl = chol.hdl / RiskConstants.CHOL_MEDS_HDL;
+    }
+    setChol(hdl, ldl);
+};
+
+var CholStore = assign({}, EventEmitter.prototype, {
+    emitCholesterolChange: function() {
+        this.emit(RiskConstants.CHOLESTEROL_CHANGE_EVENT);
+    },
+    getCholesterol: function() {
+        return {
+            ldl: chol.ldl,
+            hdl: chol.hdl
+        };
+    },
+    getColGroup: function() {
+        return limit(0, 4, Math.floor(chol.tot - 5) + 1);
+    },
+    addChangeListener: function(event, callback) { this.on(event, callback); },
+    removeChangeListener: function(event, callback) { this.removeListener(event, callback); },
+});
+
+AppDispatcher.register(function (payload) {
+    var action = payload.action;
+    switch (action.actionType) {
+        case PersonConstants.REG_MEDICAL:
+            var medical = Object.create(PersonStore.getSection('medical'));
+            setChol(medical.hdl, medical.ldl);
+            break;
+        case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
+            toggleCholMeds(action.value);
+            break;
+        default:
+            break;
+    }
+
+    return true;
+});
+
+module.exports = CholStore;
+
+},{"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./personStore.js":208,"events":1,"react/lib/Object.assign":34}],208:[function(require,module,exports){
 var AppDispatcher = require('../dispatchers/app-dispatcher.js');
 var PersonConstants = require('../constants/person-constants.js');
 var AppStore = require('../stores/appStore.js');
@@ -23511,17 +23813,18 @@ var CHANGE_EVENT = 'change';
 var person = {};
 var step = 'personal';
 
+var limit = function (min, max, value) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+};
+
 var calculateBMI = function () {
     if (!person.personal || !person.personal.height || !person.personal.weight) { return 0 };
     var hCm = person.personal.height / 100;
     var bmi = person.personal.weight / Math.pow(hCm, 2);
     return Math.round(bmi * 10) / 10;
 };
-
-var calculateTotCol = function () {
-    if (!person.medical || !person.medical.ldl || !person.medical.hdl) { return 0 };
-    return parseInt(person.medical.ldl) + parseInt(person.medical.hdl);
-}
 
 var PersonStore = assign({}, EventEmitter.prototype, {
     emitChange: function () {
@@ -23537,9 +23840,22 @@ var PersonStore = assign({}, EventEmitter.prototype, {
         person[step] = newPersonData;
         if (step == 'personal') {
             person.personal.BMI = calculateBMI();
-        } else if (step == 'medical') {
-            person.medical.totCol = calculateTotCol();
         }
+    },
+    getAgeGroup: function () {
+        return limit(0, 4, Math.floor((person.personal.age - 50) / 5) + 1);
+    },
+    getGender: function() {
+        return person.personal.gender == 'male';
+    },
+    getSmoke: function() {
+        return person.smoke;
+    },
+    getMedication: function() {
+        return {
+            cholMeds: person.medical.colMeds,
+            bpMeds: person.medical.bpMeds
+        };
     },
     getStep: function () {
         return step;
@@ -23582,7 +23898,7 @@ AppDispatcher.register(function (payload) {
 
 module.exports = PersonStore;
 
-},{"../constants/person-constants.js":199,"../dispatchers/app-dispatcher.js":201,"../stores/appStore.js":203,"events":1,"react/lib/Object.assign":34}],205:[function(require,module,exports){
+},{"../constants/person-constants.js":199,"../dispatchers/app-dispatcher.js":201,"../stores/appStore.js":205,"events":1,"react/lib/Object.assign":34}],209:[function(require,module,exports){
 var EventEmitter = require('events').EventEmitter;
 var assign = require('react/lib/Object.assign');
 var Risk = require('../../assets/risk.json');
@@ -23592,114 +23908,24 @@ var RiskConstants = require('../constants/risk-constants.js');
 var PersonConstants = require('../constants/person-constants.js');
 
 var PersonStore = require('./personStore.js');
-
-var person = {};
-
-var limit = function (min, max, value) {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-};
-
-var getAgeGroup = function () {
-    return limit(0, 4, Math.floor((person.personal.age - 50) / 5) + 1);
-};
-
-var getColGroup = function(){
-    return limit(0, 4, Math.floor(person.medical.totCol - 5) + 1);
-};
-
-var getBpGroup = function(){
-    return limit(0, 3, Math.floor((person.medical.bpSys - 140) / 20) + 1);
-};
+var BpStore = require('./BpStore.js');
+var CholStore = require('./CholStore.js');
 
 var calculateRisk = function () {
-    var r = person.gender == 'male' ? Risk.male : Risk.female;
-    r = person.smoke ? r.smoke[1] : r.smoke[0];
-    r = r.age[getAgeGroup()]
-    r = r.col[getColGroup()];
-    r = r.bp[getBpGroup()];
+    var r = PersonStore.getGender() ? Risk.male : Risk.female;
+    r = PersonStore.getSmoke() ? r.smoke[1] : r.smoke[0];
+    r = r.age[PersonStore.getAgeGroup()]
+    r = r.col[CholStore.getColGroup()];
+    r = r.bp[BpStore.getBpGroup()];
     return r;
-};
-
-var initChanges = function () {
-    return {
-        takeCholMeds: false,
-        takeBpMeds: false
-    }
-};
-
-var setChol = function (hdl, ldl) {
-    person.medical.ldl = ldl;
-    person.medical.hdl = hdl;
-    RiskStore.emitCholesterolChange();
-};
-
-var setBp = function (sys, dia) {
-    person.medical.bpSys = sys;
-    person.medical.bpDia = dia;
-    RiskStore.emitBloodPressureChange();
-};
-
-var toggleCholMeds = function () {
-    person.changes.takeCholMeds = !person.changes.takeCholMeds;
-    var ldlCoff = 1 - (person.medical.ldl / RiskConstants.CHOL_MEDS_LDL);
-    var ldl;
-    var hdl;
-    if (person.changes.takeCholMeds) {
-        ldl = person.medical.ldl * ldlCoff;
-        hdl = person.medical.hdl * RiskConstants.CHOL_MEDS_HDL;
-    } else {
-        ldl = person.medical.ldl / ldlCoff;
-        hdl = person.medical.hdl / RiskConstants.CHOL_MEDS_HDL;
-    }
-    setChol(hdl, ldl);
-};
-
-var toggleBpMeds = function () {
-    person.changes.takeBpMeds = !person.changes.takeBpMeds;
-    var sys;
-    var dia;
-    if (person.changes.takeBpMeds) {
-        sys = person.medical.bpSys - RiskConstants.BP_MEDS_SYS;
-        dia = person.medical.bpDia - RiskConstants.BP_MEDS_DIA;
-    } else {
-        sys = person.medical.bpSys + RiskConstants.BP_MEDS_SYS;
-        dia = person.medical.bpDia + RiskConstants.BP_MEDS_DIA;
-    }
-    setBp(sys, dia);
 };
 
 var RiskStore = assign({}, EventEmitter.prototype, {
     emitRiskChange: function () {
         this.emit(RiskConstants.RISK_CHANGE_EVENT);
     },
-    emitCholesterolChange: function () {
-        this.emit(RiskConstants.CHOLESTEROL_CHANGE_EVENT);
-    },
-    emitBloodPressureChange: function () {
-        this.emit(RiskConstants.BLOODPRESSURE_CHANGE_EVENT);
-    },
     getRisk: function() {
         return calculateRisk();
-    },
-    getCholesterol: function () {
-        return {
-            ldl: person.medical.ldl,
-            hdl: person.medical.hdl
-        };
-    },
-    getBloodPressure: function () {
-        return {
-            sys: person.medical.bpSys,
-            dia: person.medical.bpDia
-        };
-    },
-    getMedication: function(){
-        return {
-            cholMeds: person.medical.colMeds,
-            takeCholMeds: person.changes.takeCholMeds
-        };
     },
     addChangeListener: function (event, callback) { this.on(event, callback); },
     removeChangeListener: function (event, callback) { this.removeListener(event, callback); },
@@ -23708,18 +23934,6 @@ var RiskStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (payload) {
     var action = payload.action;
     switch (action.actionType) {
-        case PersonConstants.REG_MEDICAL:
-            person = Object.create(PersonStore.getPerson());
-            person.changes = initChanges();
-            break;
-        case RiskConstants.TOGGLE_CHOLESTEROL_MEDS:
-            toggleCholMeds();
-            RiskStore.emitRiskChange();
-            break;
-        case RiskConstants.TOGGLE_BLOODPRESSURE_MEDS:
-            toggleBpMeds();
-            RiskStore.emitRiskChange();
-            break;
         default:
             break;
     }
@@ -23729,4 +23943,4 @@ AppDispatcher.register(function (payload) {
 
 module.exports = RiskStore;
 
-},{"../../assets/risk.json":179,"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./personStore.js":204,"events":1,"react/lib/Object.assign":34}]},{},[202]);
+},{"../../assets/risk.json":179,"../constants/person-constants.js":199,"../constants/risk-constants.js":200,"../dispatchers/app-dispatcher.js":201,"./BpStore.js":203,"./CholStore.js":204,"./personStore.js":208,"events":1,"react/lib/Object.assign":34}]},{},[202]);

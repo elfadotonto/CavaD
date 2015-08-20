@@ -1,10 +1,10 @@
 var React = require('react');
-var RiskStore = require('../../stores/riskStore.js');
+var BpStore = require('../../stores/bpStore.js');
 var RiskConstants = require('../../constants/risk-constants.js');
 
 var getBp = function(){
     return {
-        bp: RiskStore.getBloodPressure()
+        bp: BpStore.getBloodPressure()
     };
 };
 
@@ -12,8 +12,8 @@ var BloodPressure = React.createClass({
     getInitialState: function(){
         return getBp();
     }, 
-    componentDidMount: function() { RiskStore.addChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); }, 
-    componentWillUnmount: function() { RiskStore.removeChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); },
+    componentDidMount: function() { BpStore.addChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); }, 
+    componentWillUnmount: function() { BpStore.removeChangeListener(RiskConstants.BLOODPRESSURE_CHANGE_EVENT, this._onChange); },
     render: function() {
         return <div className="col-sm-6">
                     <h4>Blood pressure</h4>
